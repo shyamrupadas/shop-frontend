@@ -1,8 +1,12 @@
 import { Stack } from '@mui/material';
-import { Category } from 'types/types';
+import { Category } from 'shared/types/types';
 import ProductsItem from './ProductsItem';
 
-const ProductsList = ({ category } : { category: Category}) => {
+type ProductsListProps = {
+  category: Category;
+};
+
+const ProductsList = ({ category } : ProductsListProps) => {
   const [
     product1,
     product2,
