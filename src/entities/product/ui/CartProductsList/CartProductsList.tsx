@@ -9,9 +9,6 @@ export const CartProductsList = ({ children }: CartProductsListProps) => {
     return (
         <Stack spacing={1}>
             {children}
-            {/*{React.Children.map(children, (child) => {*/}
-            {/*    return child*/}
-            {/*})}*/}
         </Stack>
     )
 }
