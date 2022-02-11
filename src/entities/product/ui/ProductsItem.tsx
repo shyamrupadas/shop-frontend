@@ -1,8 +1,12 @@
 import Image from 'next/image';
-import { Product } from 'types/types';
+import { Product } from 'shared/types/types';
 import styles from './ProductsItem.module.css';
 
-const ProductsItem = ({ product }: { product: Product}) => {
+type ProductsItemProps= {
+  product: Product;
+};
+
+const ProductsItem = ({ product }: ProductsItemProps) => {
   return (
     <div className={styles.wrapper}>
       <Image width="200" height="170" src={product.iconUrl} alt={product.name} />
