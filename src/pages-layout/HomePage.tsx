@@ -1,10 +1,12 @@
 import React from 'react';
+import { Container } from '@mui/material';
+import CategoryList from 'entities/category/ui/CategoryList';
 
 const HomePage = () => {
   return (
-    <div>
-      <h1>Main Page</h1>
-    </div>
+    <Container maxWidth="lg">
+      <CategoryList/>
+    </Container>
   );
 };
 
