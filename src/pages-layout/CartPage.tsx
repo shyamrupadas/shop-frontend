@@ -6,7 +6,7 @@ import { CartItem } from 'widgets/cart-item';
 import { CartSummary } from 'widgets/cart-summary';
 
 let productIdCounter = 1;
-const productsFake: Product[] = new Array<Product>(10).fill({
+const productsFake: Product[] = new Array<Product>(10).fill({} as any).map(() => ({
     _id: String(productIdCounter++),
     name: 'First product',
     description: 'lorem ipsum',
@@ -14,7 +14,7 @@ const productsFake: Product[] = new Array<Product>(10).fill({
     price: 0,
     title: '',
     unitMeasure: 'шт',
-});
+}));
 
 const CartPage = () => {
   return (
