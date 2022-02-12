@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { User } from 'shared/types';
 
 type UserState = {
-    userInfo: User | null;
+    userInfo: User;
 }
 
 const initialState: UserState = {
