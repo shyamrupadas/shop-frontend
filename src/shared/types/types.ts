@@ -53,6 +53,11 @@ export type Cart = {
   products: CartProduct[];
 }
 
+export type CartProduct = {
+  count: number;
+  product: Product;
+}
+
 /**
  * Cart Update Types
  */
@@ -64,9 +69,4 @@ export type CartProductUpdate = {
 export type CartUpdate = {
   userId: UserId;
   products: CartProductUpdate[];
-}
-
-export type CartProduct = {
-  count: number;
-  product: Product;
 }
