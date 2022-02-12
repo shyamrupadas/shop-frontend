@@ -1,15 +1,19 @@
 import styles from './CategoryList.module.css';
 import { Divider, Stack } from '@mui/material';
 import ProductsList from 'entities/product/ui/ProductsList';
-import categories from './categories';
+import { Category } from 'shared/types/types';
 
-const CategoryList = () => {
+type CategoryListProps = {
+  categories: Category[];
+}
+
+const CategoryList = ({ categories }: CategoryListProps) => {
   return (
     <div className={styles.wrapper}>
       <Stack spacing={2} divider={<Divider flexItem />}>
-        {categories.map((category, index) => {
+        {categories.map((category) => {
           return (
-            <ProductsList key={`category${index}`} category={category} />
+            <ProductsList key={category._id} category={category} />
           )
         })}
       </Stack>
