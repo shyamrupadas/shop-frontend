@@ -9,7 +9,13 @@ type ProductsItemProps= {
 const ProductsItem = ({ product }: ProductsItemProps) => {
   return (
     <div className={styles.wrapper}>
-      <Image width="200" height="170" src={product.iconUrl} alt={product.name} />
+      <Image
+        width="200"
+        height="170"
+        src={product.iconUrl}
+        alt={product.name}
+        priority={true}
+      />
       <h3 className={styles.title}>{product.title}</h3>
       <div className={styles.unitMeasure}>{product.unitMeasure}</div>
       <div className={styles.price}>{product.price} p</div>
