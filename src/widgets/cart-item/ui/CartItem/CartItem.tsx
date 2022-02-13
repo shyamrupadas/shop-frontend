@@ -1,9 +1,9 @@
 import { CartProductsItem } from 'entities/product';
-import { Product } from 'shared/api/product';
-import { Box, Grid, Typography } from '@mui/material';
+import { Product } from 'shared/types';
+import { Box, Grid } from '@mui/material';
 import React from 'react';
 import { AddToCart } from 'features/add-to-cart';
-import { ProductSum } from '../../../../entities/cart';
+import { ProductSum } from 'entities/cart';
 
 type CartItemProps = {
     product: Product;

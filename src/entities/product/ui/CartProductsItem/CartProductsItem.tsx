@@ -1,5 +1,5 @@
-import { Box, Card, CardContent, CardMedia, Grid, Link, Typography } from '@mui/material';
-import { Product } from 'shared/api/product';
+import { Card, CardContent, CardMedia, Grid, Link, Typography } from '@mui/material';
+import { Product } from 'shared/types';
 
 type CartProductsItemProps = {
     product: Product;
