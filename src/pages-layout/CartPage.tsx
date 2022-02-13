@@ -1,7 +1,7 @@
 import { Container, Grid, Typography } from '@mui/material';
 import React from 'react';
 import { CartProductsList } from 'entities/product';
-import { Product } from 'shared/api/product';
+import { Product } from 'shared/types';
 import { CartItem } from 'widgets/cart-item';
 import { CartSummary } from 'widgets/cart-summary';
 
@@ -14,6 +14,7 @@ const productsFake: Product[] = new Array<Product>(10).fill({} as any).map(() =>
     price: 0,
     title: '',
     unitMeasure: 'шт',
+    category: '',
 }));
 
 const CartPage = () => {
