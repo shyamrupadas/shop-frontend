@@ -31,7 +31,7 @@ const CartPage = () => {
                         <CartProductsList>
                             {cart?.products.map((cartProduct) => (
                                 <CartItem
-                                    product={cartProduct.product}
+                                    productId={cartProduct.product._id}
                                     key={cartProduct.product._id}
                                 />
                             ))}
