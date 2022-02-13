@@ -20,12 +20,12 @@ const CartPage = () => {
                         Тут пока пусто
                     </Typography>
                     <Typography>
-                        Чтобы оформить заказ, положите в неё товары
+                        Чтобы оформить заказ, положите товары в корзину
                     </Typography>
                 </Box>
             )}
 
-            {cart?.productsCount && (
+            {!!cart?.productsCount && (
                 <Grid container spacing={2}>
                     <Grid item xs={8}>
                         <CartProductsList>
