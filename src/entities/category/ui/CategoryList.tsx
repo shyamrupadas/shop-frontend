@@ -1,13 +1,14 @@
 import styles from './CategoryList.module.css';
 import { Divider, Stack } from '@mui/material';
 import ProductsList from 'entities/product/ui/ProductsList';
-import { Category } from 'shared/types/types';
+import { useSelector } from 'react-redux';
+import categoriesSelector from '../model/categoriesSelectors';
 
-type CategoryListProps = {
-  categories: Category[];
-}
 
-const CategoryList = ({ categories }: CategoryListProps) => {
+const CategoryList = () => {
+  const categories = useSelector(categoriesSelector.categories);
+  console.log('render CategoryList');
+
   return (
     <div className={styles.wrapper}>
       <Stack spacing={2} divider={<Divider flexItem />}>
