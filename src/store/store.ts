@@ -17,12 +17,12 @@ const rootReducer = {
   cart: cartModel.cartReducer,
 };
 
-export function initStore(preloadedState?: PreloadedState<RootState>) {
+export const initStore = (preloadedState?: PreloadedState<RootState>) => {
   return configureStore({
     reducer: rootReducer,
     preloadedState,
   });
-}
+};
 
 export type AppStore = ReturnType<typeof initStore>;
 export type RootState = StateFromReducersMapObject<typeof rootReducer>;
@@ -37,6 +37,6 @@ export type AppThunk<ReturnType = void> = ThunkAction<
 export const useAppDispatch = () => useDispatch<AppDispatch>();
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 
-export function useStore(preloadedState: PreloadedState<RootState>) {
+export const useStore = (preloadedState: PreloadedState<RootState>) => {
   return useMemo(() => initStore(preloadedState), [preloadedState]);
-}
+};
