@@ -2,13 +2,9 @@ import { Stack } from '@mui/material';
 import React from 'react';
 
 type CartProductsListProps = {
-    children: React.ReactNode;
-}
+  children: React.ReactNode;
+};
 
 export const CartProductsList = ({ children }: CartProductsListProps) => {
-    return (
-        <Stack spacing={1}>
-            {children}
-        </Stack>
-    )
-}
+  return <Stack spacing={1}>{children}</Stack>;
+};

@@ -12,7 +12,7 @@ export type Product = {
   description: string;
   iconUrl: string;
   category: string;
-}
+};
 
 /**
  * Categoty Types
@@ -23,7 +23,7 @@ export type Category = {
   productsCount: number;
   iconUrl: string;
   products: Product[];
-}
+};
 
 /**
  * User Types
@@ -38,7 +38,7 @@ export type User = {
   is_admin: boolean;
   is_auth: boolean;
   cart: CartId;
-}
+};
 
 /**
  * Cart Types
@@ -51,12 +51,12 @@ export type Cart = {
   productsCount: number;
   total: number;
   products: CartProduct[];
-}
+};
 
 export type CartProduct = {
   count: number;
   product: Product;
-}
+};
 
 /**
  * Cart Update Types
@@ -64,9 +64,9 @@ export type CartProduct = {
 export type CartProductUpdate = {
   count: number;
   product: ProductId;
-}
+};
 
 export type CartUpdate = {
   userId: UserId;
   products: CartProductUpdate[];
-}
+};
