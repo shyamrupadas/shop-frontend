@@ -6,7 +6,6 @@ import categoriesSelector from '../model/categoriesSelectors';
 
 const CategoryList = () => {
   const categories = useSelector(categoriesSelector.categories);
-  console.log('render CategoryList');
 
   return (
     <div className={styles.wrapper}>
