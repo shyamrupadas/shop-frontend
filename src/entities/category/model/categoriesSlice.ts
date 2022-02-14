@@ -1,4 +1,4 @@
-import { createEntityAdapter, createSlice, EntityAdapter, EntityState } from '@reduxjs/toolkit';
+import { createEntityAdapter, createSlice, EntityAdapter, EntityState, PayloadAction } from '@reduxjs/toolkit';
 import { Category } from 'shared/types/types';
 import getCategoriesThunk from './categoriesThunk';
 
@@ -14,7 +14,7 @@ const categoriesSlice = createSlice({
   name: 'categories',
   initialState: getInitialState(),
   reducers: {
-    setCategories: (state, action) => {
+    setCategories: (state, action: PayloadAction<Category[]>) => {
       categoriesEntityAdapter.setAll(state, action.payload)
     }
   },
