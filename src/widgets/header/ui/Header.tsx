@@ -1,14 +1,6 @@
 import React from 'react';
-import {
-  AppBar,
-  Badge,
-  Box,
-  Container,
-  IconButton,
-  Toolbar,
-  Typography,
-} from '@mui/material';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import { AppBar, Box, Container, Toolbar, Typography } from '@mui/material';
+import { SmallCartButton } from 'features/smal-cart-button';
 
 export const Header = () => {
   return (
@@ -19,11 +11,7 @@ export const Header = () => {
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
               КлонМаркет
             </Typography>
-            <IconButton aria-label="cart">
-              <Badge badgeContent={4} color="secondary">
-                <ShoppingCartIcon color={'inherit'} />
-              </Badge>
-            </IconButton>
+            <SmallCartButton />
           </Toolbar>
         </Container>
       </AppBar>

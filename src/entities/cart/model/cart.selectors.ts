@@ -9,6 +9,12 @@ export const cartProducts = createSelector(
   (cartState) => cartState?.products,
 );
 
+export const cartProductsCount = createSelector(
+  cartProducts,
+  (cartProducts) => cartProducts?.length || 0,
+);
+
+
 /**
  * Возвращает CartProduct или null по идентификатору продукта (ProductId)
  */
