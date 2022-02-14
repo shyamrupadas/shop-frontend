@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { Cart } from 'shared/types';
-import { incrementProductInCartThunk, loadCartByUserIdThunk } from "./cart.thunks";
+import { decrementProductInCartThunk, incrementProductInCartThunk, loadCartByUserIdThunk } from "./cart.thunks";
 
 type CartState = {
     cartInfo: Cart | null
@@ -26,7 +26,14 @@ const cartSlice = createSlice({
             state.cartInfo = action.payload;
         });
         builder.addCase(incrementProductInCartThunk.rejected, (state: CartState, action) => {
-            console.log('ERROR', action.error)
+            console.log('Increment error:', action.error)
+        });
+
+        builder.addCase(decrementProductInCartThunk.fulfilled, (state: CartState, action) => {
+            state.cartInfo = action.payload;
+        });
+        builder.addCase(decrementProductInCartThunk.rejected, (state: CartState, action) => {
+            console.log('Decrement error:', action.error)
         });
     },
 });

@@ -19,7 +19,7 @@ export const incrementProductInCartThunk = createAsyncThunk<Cart, ProductId, { s
 );
 
 export const decrementProductInCartThunk = createAsyncThunk<Cart, ProductId, { state: RootState }>(
-    'cart/incrementProductInCartThunk',
+    'cart/decrementProductInCartThunk',
     async (productId: ProductId, thunkApi) => {
         return makeProductCountChange(productId, thunkApi.getState)(-1);
     }
