@@ -1,8 +1,14 @@
 import React from 'react';
-import Head from 'next/head'
+import Head from 'next/head';
 import { cartModel } from 'entities/cart';
 
-const MainLayout = ({ children, title }: { children: React.ReactNode, title: string }) => {
+const MainLayout = ({
+  children,
+  title,
+}: {
+  children: React.ReactNode;
+  title: string;
+}) => {
   cartModel.hooks.useCartLoad();
 
   return (
@@ -12,15 +18,9 @@ const MainLayout = ({ children, title }: { children: React.ReactNode, title: str
         <meta name="description" content="Лучший интернет-магазин" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <header>
-        Header
-      </header>
-      <main>
-        {children}
-      </main>
-      <footer>
-        Footer
-      </footer>
+      <header>Header</header>
+      <main>{children}</main>
+      <footer>Footer</footer>
     </>
   );
 };

@@ -6,7 +6,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "fix": "next lint \"src/**/*.{ts,tsx,js,jsx}\" --fix"
+    "fix": "next lint --fix & prettier --write \"src/**/*.{ts,tsx,js,jsx}\""
   },
   "dependencies": {
     "@emotion/react": "^11.7.1",
