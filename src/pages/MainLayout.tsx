@@ -1,7 +1,10 @@
 import React from 'react';
 import Head from 'next/head'
+import { cartModel } from 'entities/cart';
 
 const MainLayout = ({ children, title }: { children: React.ReactNode, title: string }) => {
+  cartModel.hooks.useCartLoad();
+
   return (
     <>
       <Head>
