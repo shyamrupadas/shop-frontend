@@ -4,6 +4,7 @@ import MainLayout from './MainLayout';
 import { Category } from 'shared/types/types';
 import store, { useAppDispatch } from 'store/store';
 import getCategoriesThunk from 'entities/category/model/categoriesThunk';
+import categoriesSelector from 'entities/category/model/categoriesSelectors';
 import { setCategories } from 'entities/category/model/categoriesSlice';
 
 type HomeProps = {
@@ -12,7 +13,7 @@ type HomeProps = {
 
 export const getServerSideProps = async () => {
   await store.dispatch(getCategoriesThunk());
-  const categories = Object.values(store.getState().categories.entities);
+  const categories = categoriesSelector.categories(store.getState());
 
   return {
     props: { categories }
