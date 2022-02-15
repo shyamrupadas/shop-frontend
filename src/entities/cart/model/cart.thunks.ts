@@ -82,3 +82,11 @@ function makeProductCountChange(
     }
   };
 }
+
+export const resetCartThunk = createAsyncThunk(
+  'cart/resetCartThunk',
+  async (userId: UserId, thunkApi) => {
+    await cartApi.updateCartByUserId(userId, []);
+    thunkApi.dispatch(loadCartByUserIdThunk(userId));
+  },
+);
