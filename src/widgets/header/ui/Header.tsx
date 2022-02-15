@@ -9,13 +9,15 @@ export const Header = () => {
       <AppBar position="static">
         <Container maxWidth="lg">
           <Toolbar>
-            <Link href="/">
-              <a>
-                <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                  КлонМаркет
-                </Typography>
-              </a>
-            </Link>
+            <Box sx={{ flexGrow: 1 }}>
+              <Link href="/">
+                <a>
+                  <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                    КлонМаркет
+                  </Typography>
+                </a>
+              </Link>
+            </Box>
             <SmallCartButton />
           </Toolbar>
         </Container>
