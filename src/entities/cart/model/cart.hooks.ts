@@ -1,12 +1,13 @@
 import { useCallback, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { productById, cart, positionSum } from './cart.selectors';
+import { cart, positionSum, productById } from './cart.selectors';
 import {
   decrementProductInCartThunk,
   incrementProductInCartThunk,
   loadCartByUserIdThunk,
+  resetCartThunk,
 } from './cart.thunks';
-import { CartProduct, ProductId, Cart } from 'shared/types';
+import { Cart, CartProduct, ProductId } from 'shared/types';
 import { RootState, useAppDispatch, useAppSelector } from 'store/store';
 import { userModel } from 'entities/user';
 
@@ -73,4 +74,15 @@ export function useCartLoad(): void {
       promise.abort();
     };
   }, [userId, dispatch]);
+}
+
+export function useCartReset() {
+  const dispatch = useAppDispatch();
+  const user = userModel.hooks.useUserSelector();
+  const userId = user._id;
+
+  return useCallback(
+    () => dispatch(resetCartThunk(userId)),
+    [userId, dispatch],
+  );
 }
