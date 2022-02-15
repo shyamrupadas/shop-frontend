@@ -1,8 +1,7 @@
-import Image from 'next/image';
 import { Product } from 'shared/types/types';
 import styles from './ProductsItem.module.css';
 import React from 'react';
-import { Grid } from '@mui/material';
+import { Card, CardMedia, Grid, Typography } from '@mui/material';
 
 type ProductsItemProps = {
   product: Product;
@@ -12,23 +11,53 @@ type ProductsItemProps = {
 const ProductsItem = ({ product, children }: ProductsItemProps) => {
   return (
     <div className={styles.wrapper}>
-      <Image
-        width="200"
-        height="170"
-        src={product.iconUrl}
-        alt={product.name}
-        priority={true}
-      />
-      <h3 className={styles.title}>{product.title}</h3>
-      <div className={styles.unitMeasure}>{product.unitMeasure}</div>
-      <Grid container spacing={0}>
-        <Grid item xs={6}>
-          <div className={styles.price}>{product.price} p</div>
+      <Card
+        sx={{
+          width: 200,
+          height: 390,
+          padding: 2,
+          paddingTop: 3,
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'space-between',
+          position: 'relative',
+          border: 'none',
+          boxShadow: 'none',
+        }}
+      >
+        <Typography
+          variant="caption"
+          color="text.secondary"
+          position="absolute"
+          top="10px"
+          left="16px"
+        >
+          {product.unitMeasure}
+        </Typography>
+        <CardMedia
+          component="img"
+          width="168"
+          height="170"
+          src={product.iconUrl}
+          alt={product.name}
+        />
+        <Typography
+          gutterBottom
+          variant="subtitle2"
+          color="text.secondary"
+          component="h3"
+        >
+          {product.title}
+        </Typography>
+        <Grid container spacing={0}>
+          <Grid item xs={5}>
+            <Typography variant="h5">{product.price} p</Typography>
+          </Grid>
+          <Grid item xs={7}>
+            {children}
+          </Grid>
         </Grid>
-        <Grid item xs={6}>
-          {children}
-        </Grid>
-      </Grid>
+      </Card>
     </div>
   );
 };

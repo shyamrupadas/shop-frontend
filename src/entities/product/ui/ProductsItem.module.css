@@ -1,32 +1,10 @@
 .wrapper {
-  width: 200px;
-  height: 390px;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
   list-style: none;
   transition: .3s;
   border-radius: 5px;
 }
 
 .wrapper:hover {
-  box-shadow: 0 0 5px rgb(166, 168, 168);
+  box-shadow: 0 0 10px rgb(166, 168, 168);
   cursor: pointer;
-}
-
-.title {
-  font-size: 14px;
-  font-weight: 400;
-}
-
-.unitMeasure {
-  font-size: 14px;
-  font-weight: 400;
-  color: rgb(166, 168, 168);
-}
-
-.price {
-  font-size: 22px;
-  font-weight: 500;
 }
