@@ -1,10 +1,11 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { Cart } from 'shared/types';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { Cart, Product } from 'shared/types';
 import {
   decrementProductInCartThunk,
   incrementProductInCartThunk,
   loadCartByUserIdThunk,
 } from './cart.thunks';
+import { decreaseProduct, increaseProduct } from '../lib';
 
 type CartState = {
   cartInfo: Cart | null;
@@ -17,7 +18,18 @@ const initialState: CartState = {
 const cartSlice = createSlice({
   name: 'cart',
   initialState,
-  reducers: {},
+  reducers: {
+    incrementProductInCart(state, action: PayloadAction<Product>) {
+      if (state.cartInfo) {
+        increaseProduct(state.cartInfo, action.payload);
+      }
+    },
+    decrementProductInCart(state, action: PayloadAction<Product>) {
+      if (state.cartInfo) {
+        decreaseProduct(state.cartInfo, action.payload);
+      }
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(
       loadCartByUserIdThunk.fulfilled,
@@ -35,26 +47,26 @@ const cartSlice = createSlice({
     builder.addCase(
       incrementProductInCartThunk.fulfilled,
       (state: CartState, action) => {
-        state.cartInfo = action.payload;
+        // state.cartInfo = action.payload;
       },
     );
     builder.addCase(
       incrementProductInCartThunk.rejected,
       (state: CartState, action) => {
-        console.log('Increment error:', action.error);
+        // console.log('Increment error:', action.error);
       },
     );
 
     builder.addCase(
       decrementProductInCartThunk.fulfilled,
       (state: CartState, action) => {
-        state.cartInfo = action.payload;
+        // state.cartInfo = action.payload;
       },
     );
     builder.addCase(
       decrementProductInCartThunk.rejected,
       (state: CartState, action) => {
-        console.log('Decrement error:', action.error);
+        // console.log('Decrement error:', action.error);
       },
     );
   },

@@ -20,7 +20,7 @@ export const CartItem = ({ productId }: CartItemProps) => {
     <CartProductsItem product={cartProduct.product}>
       <CartProductsItem.Actions>
         <ProductSum sum={productSum || 0} />
-        <AddToCart productId={cartProduct.product._id} />
+        <AddToCart product={cartProduct.product} />
       </CartProductsItem.Actions>
     </CartProductsItem>
   );

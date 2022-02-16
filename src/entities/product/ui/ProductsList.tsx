@@ -37,7 +37,7 @@ const ProductsList = ({ category }: ProductsListProps) => {
                     TODO: AddToCart не должен тут находиться.
                      Композиция должна быть на уровне widget, page или app
                  */}
-            <AddToCart productId={product._id} />
+            <AddToCart product={product} />
           </ProductsItem>
         ))}
       </Stack>

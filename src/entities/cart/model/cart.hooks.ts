@@ -7,7 +7,7 @@ import {
   loadCartByUserIdThunk,
   resetCartThunk,
 } from './cart.thunks';
-import { Cart, CartProduct, ProductId } from 'shared/types';
+import { Cart, CartProduct, Product, ProductId } from 'shared/types';
 import { RootState, useAppDispatch, useAppSelector } from 'store/store';
 import { userModel } from 'entities/user';
 
@@ -19,15 +19,15 @@ export function useCartIncrementDecrement() {
   const dispatch = useAppDispatch();
 
   const incrementProductCount = useCallback(
-    (productId) => {
-      dispatch(incrementProductInCartThunk(productId));
+    (product: Product) => {
+      dispatch(incrementProductInCartThunk(product));
     },
     [dispatch],
   );
 
   const decrementProductCount = useCallback(
-    (productId) => {
-      dispatch(decrementProductInCartThunk(productId));
+    (product: Product) => {
+      dispatch(decrementProductInCartThunk(product));
     },
     [dispatch],
   );

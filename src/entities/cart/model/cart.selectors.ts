@@ -3,7 +3,6 @@ import { CartProduct, CartProductUpdate, ProductId } from 'shared/types';
 import { RootState } from 'store/store';
 
 export const cart = (state: RootState) => state?.cart?.cartInfo;
-export const cartTotal = createSelector(cart, (cartState) => cartState?.total);
 export const cartProducts = createSelector(
   cart,
   (cartState) => cartState?.products,
@@ -14,6 +13,16 @@ export const cartProductsCount = createSelector(
   (cartProducts) => cartProducts?.length || 0,
 );
 
+export const cartTotal = createSelector(
+  cartProducts,
+  (cartProducts): number => {
+    return (
+      cartProducts?.reduce((total, cartProduct) => {
+        return total + cartProduct.product.price * cartProduct.count;
+      }, 0) || 0
+    );
+  },
+);
 
 /**
  * Возвращает CartProduct или null по идентификатору продукта (ProductId)
