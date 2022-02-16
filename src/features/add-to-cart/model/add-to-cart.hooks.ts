@@ -1,19 +1,19 @@
 import { useCallback } from 'react';
-import { ProductId } from 'shared/types';
+import { Product, ProductId } from 'shared/types';
 import { cartModel } from 'entities/cart';
 
-export function useAddToCart(productId: ProductId) {
-  const productCount = cartModel.hooks.useCartProductCountSelector(productId);
+export function useAddToCart(product: Product) {
+  const productCount = cartModel.hooks.useCartProductCountSelector(product._id);
   const { incrementProductCount, decrementProductCount } =
     cartModel.hooks.useCartIncrementDecrement();
 
   const handleDecrementClick = useCallback(() => {
-    decrementProductCount(productId);
-  }, [productId, decrementProductCount]);
+    decrementProductCount(product);
+  }, [product, decrementProductCount]);
 
   const handleIncrementClick = useCallback(() => {
-    incrementProductCount(productId);
-  }, [productId, incrementProductCount]);
+    incrementProductCount(product);
+  }, [product, incrementProductCount]);
 
   return {
     productCount,

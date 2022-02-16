@@ -1,16 +1,16 @@
 import { Box, ButtonGroup, IconButton, Typography } from '@mui/material';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-import { ProductId } from 'shared/types';
+import { Product } from 'shared/types';
 import { useAddToCart } from '../../model';
 
 type AddToCartProps = {
-  productId: ProductId;
+  product: Product;
 };
 
-export function AddToCart({ productId }: AddToCartProps) {
+export function AddToCart({ product }: AddToCartProps) {
   const { productCount, handleDecrementClick, handleIncrementClick } =
-    useAddToCart(productId);
+    useAddToCart(product);
 
   return (
     <ButtonGroup aria-label="outlined primary button group">
