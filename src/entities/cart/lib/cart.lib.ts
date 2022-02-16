@@ -1,5 +1,27 @@
 import { Cart, CartProduct, Product } from 'shared/types';
 
+function getProductsCount(cart: Cart): number {
+  return cart.products.reduce(
+    (productsCount: number, cartProduct: CartProduct) => {
+      return (productsCount += cartProduct.count);
+    },
+    0,
+  );
+}
+
+function getTotal(cart: Cart): number {
+  return cart.products.reduce((total: number, cartProduct: CartProduct) => {
+    return (total += cartProduct.count * cartProduct.product.price);
+  }, 0);
+}
+
+function setTotalAndProductsCount(cart: Cart): Cart {
+  cart.productsCount = getProductsCount(cart);
+  cart.total = getTotal(cart);
+
+  return cart;
+}
+
 export function addProductToCart(cart: Cart, product: Product): Cart {
   const newCartProduct: CartProduct = {
     count: 1,
@@ -8,7 +30,7 @@ export function addProductToCart(cart: Cart, product: Product): Cart {
 
   cart.products.push(newCartProduct);
 
-  return cart;
+  return setTotalAndProductsCount(cart);
 }
 
 export function findCartProductIndex(cart: Cart, product: Product): number {
@@ -41,7 +63,7 @@ export function increaseProduct(cart: Cart, product: Product): Cart {
   // Товар уже есть корзине. Увеличиваем количество:
   cartProduct.count += 1;
 
-  return cart;
+  return setTotalAndProductsCount(cart);
 }
 
 export function decreaseProduct(cart: Cart, product: Product): Cart {
@@ -60,5 +82,5 @@ export function decreaseProduct(cart: Cart, product: Product): Cart {
     cart.products.splice(cartProductIndex, 1);
   }
 
-  return cart;
+  return setTotalAndProductsCount(cart);
 }
