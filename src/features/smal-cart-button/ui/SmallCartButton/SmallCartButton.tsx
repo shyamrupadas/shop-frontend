@@ -1,6 +1,6 @@
 import { Badge, IconButton, Popover, Typography } from '@mui/material';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import React from 'react';
+import React, { useCallback } from 'react';
 import Link from 'next/link';
 import { useAppSelector } from 'store/store';
 import { cartModel } from 'entities/cart';
@@ -18,13 +18,16 @@ export const SmallCartButton = () => {
     null,
   );
 
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
+  const handleClick = useCallback(
+    (event: React.MouseEvent<HTMLButtonElement>) => {
+      setAnchorEl(event.currentTarget);
+    },
+    [setAnchorEl],
+  );
 
-  const handleClose = () => {
+  const handleClose = useCallback(() => {
     setAnchorEl(null);
-  };
+  }, [setAnchorEl]);
 
   const open = Boolean(anchorEl);
   const id = open ? 'simple-popover' : undefined;
