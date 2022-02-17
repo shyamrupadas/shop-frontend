@@ -70,3 +70,6 @@ export const cartProductsForUpdate = createSelector(
     return new Map<ProductId, CartProductUpdate>(updatedProductsList || []);
   },
 );
+
+export const cartError = (state: RootState) =>
+  state?.cart?.cartErrorProductNameList;
