@@ -1,6 +1,11 @@
-import { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { cart, positionSum, productById } from './cart.selectors';
+import {
+  cart,
+  cartNotificationSelector,
+  positionSum,
+  productById,
+} from './cart.selectors';
 import {
   decrementProductInCartThunk,
   incrementProductInCartThunk,
@@ -10,6 +15,7 @@ import {
 import { Cart, CartProduct, Product, ProductId } from 'shared/types';
 import { RootState, useAppDispatch, useAppSelector } from 'store/store';
 import { userModel } from 'entities/user';
+import { cartModel } from '..';
 
 export function useCartSelector(): Cart | null {
   return useSelector(cart);
@@ -85,4 +91,32 @@ export function useCartReset() {
     () => dispatch(resetCartThunk(userId)),
     [userId, dispatch],
   );
+}
+
+export function useCartNotification(
+  notificationRef: React.MutableRefObject<undefined>,
+) {
+  const dispatch = useAppDispatch();
+  const notification = useAppSelector(cartNotificationSelector);
+  const isOpen = Boolean(notification);
+
+  const [anchorElement, setAnchorElement] = React.useState<HTMLElement | null>(
+    null,
+  );
+
+  const closeNotification = useCallback(() => {
+    dispatch(cartModel.actions.resetNotification());
+  }, [dispatch]);
+
+  useEffect(
+    () => setAnchorElement(notificationRef.current || null),
+    [setAnchorElement],
+  );
+
+  return {
+    isOpen,
+    anchorElement,
+    notification,
+    closeNotification,
+  };
 }
