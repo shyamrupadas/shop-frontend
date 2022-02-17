@@ -70,3 +70,20 @@ export const cartProductsForUpdate = createSelector(
     return new Map<ProductId, CartProductUpdate>(updatedProductsList || []);
   },
 );
+
+export const cartNotificationSelector = (state: RootState) =>
+  state.cart.notification;
+
+export const overstockedProducts = createSelector(
+  cartNotificationSelector,
+  cartProducts,
+  (notification, cartProducts): CartProduct[] => {
+    return (
+      cartProducts?.filter((cartProduct) => {
+        return notification?.overstockedProductsIds.includes(
+          cartProduct.product._id,
+        );
+      }) || []
+    );
+  },
+);
