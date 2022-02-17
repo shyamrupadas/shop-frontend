@@ -1,4 +1,9 @@
-import { Cart, CartProduct, Product } from 'shared/types';
+import {
+  Cart,
+  CartProduct,
+  CartProductUpdate,
+  Product,
+} from 'shared/types';
 
 function getProductsCount(cart: Cart): number {
   return cart.products.reduce(
@@ -83,4 +88,19 @@ export function decreaseProduct(cart: Cart, product: Product): Cart {
   }
 
   return setTotalAndProductsCount(cart);
+}
+
+export function setProductCount(
+  cart: Cart,
+  productUpdateData: CartProductUpdate,
+) {
+  const cartProduct = cart.products.find((cartProduct) => {
+    return cartProduct.product._id === productUpdateData.product;
+  });
+
+  if (!cartProduct) {
+    return null;
+  }
+
+  cartProduct.count = productUpdateData.count;
 }
