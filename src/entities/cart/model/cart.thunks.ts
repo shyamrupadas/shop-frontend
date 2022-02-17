@@ -1,9 +1,10 @@
-import { AsyncThunk, createAsyncThunk } from '@reduxjs/toolkit';
+import { createAsyncThunk } from '@reduxjs/toolkit';
 import { cartApi } from 'shared/api/cart';
 import { Cart, Product, UserId } from 'shared/types';
 import { RootState } from 'store/store';
 import { cartModel } from '..';
-import { debounce, debounceTimer } from './debounce';
+import { debounce } from './debounce';
+import { actions } from './cart.slice';
 
 export const loadCartByUserIdThunk = createAsyncThunk(
   'cart/loadCartByUserIdThunk',
@@ -50,5 +51,15 @@ export const resetCartThunk = createAsyncThunk(
   async (userId: UserId, thunkApi) => {
     await cartApi.updateCartByUserId(userId, []);
     thunkApi.dispatch(loadCartByUserIdThunk(userId));
+  },
+);
+
+export const setCartErrorThunk = createAsyncThunk(
+  'cart/setCartErrorThunk',
+  async (cartErrorProductNameList: string[], thunkApi) => {
+    thunkApi.dispatch(actions.setCartError(cartErrorProductNameList));
+    setTimeout(() => {
+      thunkApi.dispatch(actions.removeCartError());
+    }, 2000);
   },
 );
