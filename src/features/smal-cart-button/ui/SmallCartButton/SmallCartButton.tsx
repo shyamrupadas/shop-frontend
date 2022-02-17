@@ -1,64 +1,53 @@
-import { Badge, IconButton, Popover, Typography } from '@mui/material';
+import { Badge, Box, IconButton } from '@mui/material';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import React, { useCallback } from 'react';
+import React from 'react';
 import Link from 'next/link';
 import { useAppSelector } from 'store/store';
-import { cartModel } from 'entities/cart';
-
-const ProductNameWithErrorList = [
-  'Напиток кокосовый Alpro Barista с соей 1,4% 1 л',
-  'Сухарики Finn Crisp ржаные 200 г',
-];
+import { cartModel, CartNotification } from 'entities/cart';
 
 export const SmallCartButton = () => {
+  const boxRef = React.useRef();
+
   const cartProductsCount = useAppSelector(
     cartModel.selectors.cartProductsCount,
   );
-  const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
-    null,
+
+  const overstockedProducts = useAppSelector(
+    cartModel.selectors.overstockedProducts,
   );
 
-  const handleClick = useCallback(
-    (event: React.MouseEvent<HTMLButtonElement>) => {
-      setAnchorEl(event.currentTarget);
-    },
-    [setAnchorEl],
-  );
-
-  const handleClose = useCallback(() => {
-    setAnchorEl(null);
-  }, [setAnchorEl]);
-
-  const open = Boolean(anchorEl);
-  const id = open ? 'simple-popover' : undefined;
+  const { isOpen, anchorElement, notification, closeNotification } =
+    cartModel.hooks.useCartNotification(boxRef);
 
   return (
-    <>
+    <Box ref={boxRef}>
       <Link href="/cart" passHref>
-        <IconButton aria-label="cart" component="span" onMouseOut={handleClick}>
+        <IconButton aria-label="cart" component="span">
           <Badge badgeContent={cartProductsCount} color="secondary">
             <ShoppingCartIcon color={'inherit'} />
           </Badge>
         </IconButton>
       </Link>
-      <Popover
-        id={id}
-        open={open}
-        anchorEl={anchorEl}
-        onClose={handleClose}
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'left',
-        }}
-      >
-        <Typography sx={{ p: 2 }}>Внимание:</Typography>
-        {ProductNameWithErrorList.map((name: string) => (
-          <Typography key={name} sx={{ p: 1 }}>
-            {/* eslint-disable-next-line react/no-unescaped-entities */}
-            товара "{name}" доступно только 5 шт
-          </Typography>
-        ))}
-      </Popover>
-    </>
+
+      {anchorElement && isOpen && (
+        <CartNotification
+          isOpen={isOpen}
+          onClose={closeNotification}
+          anchorElement={anchorElement}
+        >
+          <CartNotification.Title>
+            Ваша корзина обновлена с учетом наличия товаров на складе:
+          </CartNotification.Title>
+          <CartNotification.MessagesList>
+            {overstockedProducts.map((cartProduct) => (
+              <CartNotification.Message key={cartProduct.product._id}>
+                {/* eslint-disable-next-line react/no-unescaped-entities */}— «
+                {cartProduct.product.name}» доступно {cartProduct.count} шт
+              </CartNotification.Message>
+            ))}
+          </CartNotification.MessagesList>
+        </CartNotification>
+      )}
+    </Box>
   );
 };

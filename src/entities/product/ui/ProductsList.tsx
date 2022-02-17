@@ -1,7 +1,7 @@
 import { Box, Stack, Typography } from '@mui/material';
 import { Category, Product } from 'shared/types/types';
 import ProductsItem from './ProductsItem';
-import { AddToCart } from '../../../features/add-to-cart';
+import { AddToCart } from 'features/add-to-cart';
 import { useWindowWidth } from 'shared/hooks/useWindowWidth';
 
 type ProductsListProps = {
@@ -33,10 +33,7 @@ const ProductsList = ({ category }: ProductsListProps) => {
       <Stack direction="row" justifyContent="center" spacing={5}>
         {renderingProducts.map((product) => (
           <ProductsItem key={product._id} product={product}>
-            {/*
-                    TODO: AddToCart не должен тут находиться.
-                     Композиция должна быть на уровне widget, page или app
-                 */}
+            {/* TODO: AddToCart не должен тут находиться. Композиция должна быть на уровне widget, page или app */}
             <AddToCart product={product} />
           </ProductsItem>
         ))}

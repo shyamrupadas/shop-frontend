@@ -9,8 +9,12 @@ type AddToCartProps = {
 };
 
 export function AddToCart({ product }: AddToCartProps) {
-  const { productCount, handleDecrementClick, handleIncrementClick } =
-    useAddToCart(product);
+  const {
+    productCount,
+    handleDecrementClick,
+    handleIncrementClick,
+    isMaxCount,
+  } = useAddToCart(product);
 
   return (
     <ButtonGroup aria-label="outlined primary button group">
@@ -39,7 +43,11 @@ export function AddToCart({ product }: AddToCartProps) {
         </Typography>
       </Box>
 
-      <IconButton color="primary" onClick={handleIncrementClick}>
+      <IconButton
+        color="primary"
+        onClick={handleIncrementClick}
+        disabled={isMaxCount}
+      >
         <AddCircleOutlineIcon />
       </IconButton>
     </ButtonGroup>
