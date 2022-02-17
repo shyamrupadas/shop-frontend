@@ -9,10 +9,12 @@ import { decreaseProduct, increaseProduct } from '../lib';
 
 type CartState = {
   cartInfo: Cart | null;
+  cartErrorProductNameList: string[];
 };
 
 const initialState: CartState = {
   cartInfo: null,
+  cartErrorProductNameList: [],
 };
 
 const cartSlice = createSlice({
@@ -28,6 +30,12 @@ const cartSlice = createSlice({
       if (state.cartInfo) {
         decreaseProduct(state.cartInfo, action.payload);
       }
+    },
+    setCartError(state, action: PayloadAction<string[]>) {
+      state.cartErrorProductNameList = action.payload;
+    },
+    removeCartError(state) {
+      state.cartErrorProductNameList = [];
     },
   },
   extraReducers: (builder) => {
