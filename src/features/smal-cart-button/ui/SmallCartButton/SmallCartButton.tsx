@@ -1,41 +1,26 @@
 import { Badge, IconButton, Popover, Typography } from '@mui/material';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import React, { useCallback } from 'react';
+import React from 'react';
 import Link from 'next/link';
 import { useAppSelector } from 'store/store';
 import { cartModel } from 'entities/cart';
-
-const ProductNameWithErrorList = [
-  'Напиток кокосовый Alpro Barista с соей 1,4% 1 л',
-  'Сухарики Finn Crisp ржаные 200 г',
-];
 
 export const SmallCartButton = () => {
   const cartProductsCount = useAppSelector(
     cartModel.selectors.cartProductsCount,
   );
-  const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
-    null,
+
+  const ProductNameWithErrorList = useAppSelector(
+    cartModel.selectors.cartError,
   );
 
-  const handleClick = useCallback(
-    (event: React.MouseEvent<HTMLButtonElement>) => {
-      setAnchorEl(event.currentTarget);
-    },
-    [setAnchorEl],
-  );
-
-  const handleClose = useCallback(() => {
-    setAnchorEl(null);
-  }, [setAnchorEl]);
-
-  const open = Boolean(anchorEl);
-  const id = open ? 'simple-popover' : undefined;
+  const open = Boolean(ProductNameWithErrorList.length);
+  const id = open ? 'cart-error-popover' : undefined;
 
   return (
     <>
       <Link href="/cart" passHref>
-        <IconButton aria-label="cart" component="span" onMouseOut={handleClick}>
+        <IconButton aria-label="cart" component="span">
           <Badge badgeContent={cartProductsCount} color="secondary">
             <ShoppingCartIcon color={'inherit'} />
           </Badge>
@@ -44,11 +29,11 @@ export const SmallCartButton = () => {
       <Popover
         id={id}
         open={open}
-        anchorEl={anchorEl}
-        onClose={handleClose}
+        // Todo передать в anchorEl элемент IconButton
+        // anchorEl={anchorEl}
         anchorOrigin={{
           vertical: 'bottom',
-          horizontal: 'left',
+          horizontal: 'right',
         }}
       >
         <Typography sx={{ p: 2 }}>Внимание:</Typography>
