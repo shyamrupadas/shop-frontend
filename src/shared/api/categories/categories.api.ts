@@ -3,7 +3,7 @@ import { Category, PaginationWrapper } from 'shared/types/types';
 
 type GetCategoriesResponse = PaginationWrapper<Category[]>;
 
-const SERVER_URL = 'http://localhost:3001';
+const SERVER_URL = 'https://sbermarket-internship.herokuapp.com';
 
 export const getCategories = async (
   page = 1,
