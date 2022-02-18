@@ -51,11 +51,15 @@ export type Cart = {
   productsCount: number;
   total: number;
   products: CartProduct[];
+  productsOverflow: ProductId[];
+  timestamp: number;
+  isClientOk: boolean;
 };
 
 export type CartProduct = {
   count: number;
   product: Product;
+  isMaxCount?: boolean;
 };
 
 /**

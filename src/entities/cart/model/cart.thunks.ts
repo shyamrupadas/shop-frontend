@@ -1,9 +1,9 @@
-import { AsyncThunk, createAsyncThunk } from '@reduxjs/toolkit';
+import { createAsyncThunk } from '@reduxjs/toolkit';
 import { cartApi } from 'shared/api/cart';
 import { Cart, Product, UserId } from 'shared/types';
 import { RootState } from 'store/store';
 import { cartModel } from '..';
-import { debounce, debounceTimer } from './debounce';
+import { debounce } from './debounce';
 
 export const loadCartByUserIdThunk = createAsyncThunk(
   'cart/loadCartByUserIdThunk',
