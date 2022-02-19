@@ -10,9 +10,11 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import { userModel } from 'entities/user';
 import { cartModel } from 'entities/cart';
 import { useMemo } from 'react';
+import productsSlice from '../entities/product/model/productsSlice';
 
 const rootReducer = {
   categories: categoriesSlice,
+  products: productsSlice,
   user: userModel.userReducer,
   cart: cartModel.cartReducer,
 };
