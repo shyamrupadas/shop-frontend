@@ -1,6 +1,5 @@
 import React from 'react';
 import Head from 'next/head';
-import { cartModel } from 'entities/cart';
 import { Header } from '../widgets/header';
 import { Footer } from '../widgets/footer';
 
@@ -11,8 +10,6 @@ const MainLayout = ({
   children: React.ReactNode;
   title: string;
 }) => {
-  cartModel.hooks.useCartLoad();
-
   return (
     <>
       <Head>
