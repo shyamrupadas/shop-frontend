@@ -21,6 +21,7 @@ export const getServerSideProps = async () => {
   const store = initStore();
   // await store.dispatch(getProductsThunk(categoryId));
   // const defaultServerSideProps = await getServerSideStore();
+
   await store.dispatch(
     catalogModel.thunks.loadProductsWithPagination({
       categoryId,

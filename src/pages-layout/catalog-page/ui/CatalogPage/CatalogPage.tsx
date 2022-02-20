@@ -36,6 +36,22 @@ const CatalogPage = () => {
     );
   }, [currentPage, categoryId, dispatch]);
 
+  useEffect(() => {
+    if (typeof categoryId !== 'string') {
+      return;
+    }
+
+    if (status === 'idle') {
+      dispatch(
+        catalogModel.thunks.loadProductsWithPagination({
+          categoryId,
+          page: 1,
+          limit: 20,
+        }),
+      );
+    }
+  }, [status, categoryId, dispatch]);
+
   return (
     <Container maxWidth="lg">
       <Typography gutterBottom variant="h4" component="h2">
