@@ -49,7 +49,7 @@ const ProductsItem = ({ product, children }: ProductsItemProps) => {
         >
           {product.title}
         </Typography>
-        <Grid container spacing={0}>
+        <Grid container spacing={1} sx={{ flexWrap: 'nowrap' }}>
           <Grid item xs={5}>
             <Typography variant="h5">{product.price} p</Typography>
           </Grid>
