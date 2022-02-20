@@ -17,12 +17,13 @@ export const debounceCartThunk = createAsyncThunk<
   UserId,
   { state: RootState }
 >('cart/debounceCartThunk', async (userId: UserId, thunkApi) => {
-  const cartState = thunkApi.getState().cart.cartInfo as Cart;
-  const products = cartState.products;
-  const updatingProducts = products?.map((product) => {
-    return { count: product.count, product: product.product._id };
-  });
-  return await cartApi.updateCartByUserId(userId, updatingProducts);
+  const cartUpdateData = cartModel.selectors.cartProductsForUpdate(
+    thunkApi.getState(),
+  );
+  return await cartApi.updateCartByUserId(
+    userId,
+    Array.from(cartUpdateData.values()),
+  );
 });
 
 export const incrementProductInCartThunk = createAsyncThunk<
@@ -32,7 +33,7 @@ export const incrementProductInCartThunk = createAsyncThunk<
 >('cart/incrementProductInCartThunk', async (product: Product, thunkApi) => {
   const userId = thunkApi.getState().user.userInfo._id;
   thunkApi.dispatch(cartModel.actions.incrementProductInCart(product));
-  debounce(userId, thunkApi, debounceCartThunk);
+  debounce(userId, thunkApi.dispatch, debounceCartThunk);
 });
 
 export const decrementProductInCartThunk = createAsyncThunk<
@@ -42,7 +43,7 @@ export const decrementProductInCartThunk = createAsyncThunk<
 >('cart/decrementProductInCartThunk', async (product: Product, thunkApi) => {
   const userId = thunkApi.getState().user.userInfo._id;
   thunkApi.dispatch(cartModel.actions.decrementProductInCart(product));
-  debounce(userId, thunkApi, debounceCartThunk);
+  debounce(userId, thunkApi.dispatch, debounceCartThunk);
 });
 
 export const resetCartThunk = createAsyncThunk(
