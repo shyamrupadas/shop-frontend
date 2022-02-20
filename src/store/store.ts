@@ -14,12 +14,14 @@ import categoriesSlice from 'entities/category/model/categoriesSlice';
 import { userModel } from 'entities/user';
 import { cartModel } from 'entities/cart';
 import productsSlice from '../entities/product/model/productsSlice';
+import { catalogModel } from 'entities/catalog';
 
 const rootReducer = {
   categories: categoriesSlice,
   products: productsSlice,
   user: userModel.userReducer,
   cart: cartModel.cartReducer,
+  catalog: catalogModel.catalogReducer,
 };
 
 export let store: EnhancedStore<

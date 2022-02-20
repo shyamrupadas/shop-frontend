@@ -17,8 +17,9 @@ export type Product = {
 /**
  * Categoty Types
  */
+export type CategoryId = string;
 export type Category = {
-  _id: string;
+  _id: CategoryId;
   name: string;
   productsCount: number;
   iconUrl: string;
