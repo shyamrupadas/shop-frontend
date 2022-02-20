@@ -13,9 +13,11 @@ import type { ThunkMiddleware } from 'redux-thunk';
 import categoriesSlice from 'entities/category/model/categoriesSlice';
 import { userModel } from 'entities/user';
 import { cartModel } from 'entities/cart';
+import productsSlice from '../entities/product/model/productsSlice';
 
 const rootReducer = {
   categories: categoriesSlice,
+  products: productsSlice,
   user: userModel.userReducer,
   cart: cartModel.cartReducer,
 };

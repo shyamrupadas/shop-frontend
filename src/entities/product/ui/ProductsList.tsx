@@ -3,6 +3,7 @@ import { Category, Product } from 'shared/types/types';
 import ProductsItem from './ProductsItem';
 import { AddToCart } from 'features/add-to-cart';
 import { useWindowWidth } from 'shared/hooks/useWindowWidth';
+import Link from 'next/link';
 
 type ProductsListProps = {
   category: Category;
@@ -27,9 +28,14 @@ const ProductsList = ({ category }: ProductsListProps) => {
 
   return (
     <Box>
-      <Typography gutterBottom variant="h4" component="h2">
-        {category.name}
-      </Typography>
+      <Link href={'/catalog/' + category._id}>
+        <a>
+          <Typography gutterBottom variant="h4" component="h2">
+            {category.name}
+          </Typography>
+        </a>
+      </Link>
+
       <Stack direction="row" justifyContent="center" spacing={5}>
         {renderingProducts.map((product) => (
           <ProductsItem key={product._id} product={product}>
