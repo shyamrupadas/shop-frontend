@@ -11,10 +11,8 @@ const {
   (state: RootState): EntityState<Product> => state.products,
 );
 
-const productsSelector = {
+export const productsSelector = {
   productsIds,
   productById,
   products,
 };
-
-export default productsSelector;
