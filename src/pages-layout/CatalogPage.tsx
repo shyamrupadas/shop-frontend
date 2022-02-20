@@ -5,14 +5,17 @@ import { AddToCart } from '../features/add-to-cart';
 import { useSelector } from 'react-redux';
 import { productsSelector } from '../entities/product/model';
 
-export const CatalogPage = () => {
+type CatalogPageProps = {
+  name: string;
+};
+
+export const CatalogPage = ({ name }: CatalogPageProps) => {
   const products = useSelector(productsSelector.products);
 
   return (
     <Container maxWidth="lg">
       <Typography gutterBottom variant="h4" component="h2">
-        {/*Todo получать название категории из стейта*/}
-        Вода, соки, напитки
+        {name}
       </Typography>
       <Grid container spacing={2}>
         {products.map((product) => (

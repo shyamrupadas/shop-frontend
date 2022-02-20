@@ -28,7 +28,12 @@ const ProductsList = ({ category }: ProductsListProps) => {
 
   return (
     <Box>
-      <Link href={'/catalog/' + category._id}>
+      <Link
+        href={{
+          pathname: `/catalog/${category._id}`,
+          query: { name: category.name },
+        }}
+      >
         <a>
           <Typography gutterBottom variant="h4" component="h2">
             {category.name}

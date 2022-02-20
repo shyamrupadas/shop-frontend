@@ -11,12 +11,13 @@ export const getServerSideProps = async () => await getServerSideStore();
 const Catalog: NextPage = () => {
   const router = useRouter();
   const pid = typeof router.query.pid === 'string' ? router.query.pid : '';
+  const name = typeof router.query.name === 'string' ? router.query.name : '';
 
   productsHooks.useProductsLoad(pid);
 
   return (
     <MainLayout title="Каталог">
-      <CatalogPage />
+      <CatalogPage name={name} />
     </MainLayout>
   );
 };
