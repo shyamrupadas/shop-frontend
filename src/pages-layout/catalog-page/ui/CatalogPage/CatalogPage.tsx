@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { Container, Grid, Typography } from '@mui/material';
 import ProductsItem from 'entities/product/ui/ProductsItem';
 import { AddToCart } from 'features/add-to-cart';
@@ -7,33 +7,55 @@ import productsSelectors from 'entities/product/model/productsSelectors';
 import { useAppDispatch, useAppSelector } from 'store';
 import { catalogModel } from 'entities/catalog';
 import { useRouter } from 'next/router';
+import InfinityProductsList from '../InfinityProductsList';
 
 const CatalogPage = () => {
   const router = useRouter();
   const { categoryId } = router.query;
+  const dispatch = useAppDispatch();
 
-  const catalog = useAppSelector(catalogModel.selectors.selectCatalog);
+  const catalog = useAppSelector(catalogModel.selectors.catalog);
+  const status = useAppSelector(catalogModel.selectors.status);
+  const currentPage = useAppSelector(catalogModel.selectors.currentPage);
   const products = Object.values(catalog.data).flat();
+  const isLoading = status === 'pending';
+  const hasNextPage = currentPage < catalog.lastPage;
+  const fetchNextPage = useCallback(() => {
+    if (typeof categoryId !== 'string') {
+      return;
+    }
+
+    console.log('fetchNextPage:', currentPage + 1);
+
+    dispatch(
+      catalogModel.thunks.loadProductsWithPagination({
+        categoryId,
+        page: currentPage + 1,
+        limit: 20,
+      }),
+    );
+  }, [currentPage, categoryId, dispatch]);
 
   return (
     <Container maxWidth="lg">
       <Typography gutterBottom variant="h4" component="h2">
-        Страница: {categoryId}
-      </Typography>
-      <Typography gutterBottom variant="h4" component="h2">
         {/*Todo получать название категории из стейта*/}
-        Вода, соки, напитки
+        Вода, соки, напитки {categoryId}
       </Typography>
-      <Grid container spacing={2}>
-        {products.map((product) => (
-          <Grid item xs={3} key={product._id}>
-            <ProductsItem product={product}>
-              {/* TODO: AddToCart не должен тут находиться. Композиция должна быть на уровне widget, page или app */}
-              <AddToCart product={product} />
-            </ProductsItem>
-          </Grid>
-        ))}
-      </Grid>
+
+      <InfinityProductsList
+        products={products}
+        hasMore={hasNextPage}
+        isFetching={isLoading}
+        fetchItems={fetchNextPage}
+        rowsCount={catalog.length / 5} // TODO: !!!
+      >
+        {(product, key) => (
+          <ProductsItem product={product} key={key}>
+            <AddToCart product={product} />
+          </ProductsItem>
+        )}
+      </InfinityProductsList>
     </Container>
   );
 };

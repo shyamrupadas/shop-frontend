@@ -1,6 +1,5 @@
 import { Product } from 'shared/types';
 import { createSlice } from '@reduxjs/toolkit';
-import { loadCartByUserIdThunk } from '../../cart/model/cart.thunks';
 import { loadProductsWithPagination } from './catalog.thunks';
 
 type CatalogState = {
@@ -12,6 +11,7 @@ type CatalogState = {
     data: {
       [key: number]: Product[];
     };
+    status: 'idle' | 'pending' | 'success' | 'error';
   };
 };
 
@@ -22,6 +22,7 @@ const initialState: CatalogState = {
     limit: 0,
     lastPage: 0,
     data: {},
+    status: 'idle',
   },
 };
 
@@ -30,6 +31,13 @@ const catalogSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
+    builder.addCase(
+      loadProductsWithPagination.pending,
+      (state: CatalogState, action) => {
+        state.catalogInfo.status = 'pending';
+      },
+    );
+
     builder.addCase(
       loadProductsWithPagination.fulfilled,
       (state: CatalogState, action) => {
@@ -42,6 +50,7 @@ const catalogSlice = createSlice({
             ...state.catalogInfo.data,
             [action.payload.page]: action.payload.data,
           },
+          status: 'success',
         };
       },
     );

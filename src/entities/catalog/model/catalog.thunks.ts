@@ -14,11 +14,6 @@ export const loadProductsWithPagination = createAsyncThunk<
 >(
   'catalog/loadProductsWithPagination',
   async ({ categoryId, page, limit }, thunkApi) => {
-    console.log('catalog/loadProductsWithPagination', {
-      categoryId,
-      page,
-      limit,
-    });
     return await catalogApi.fetchProductsWithPagination(
       categoryId,
       page,

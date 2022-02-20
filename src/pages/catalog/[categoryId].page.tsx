@@ -8,6 +8,7 @@ import { getProductsThunk } from 'entities/product/model/productsThunk';
 // import { CatalogPage } from '../../pages-layout/CatalogPage';
 import { default as CatalogPage } from 'pages-layout/catalog-page/ui/CatalogPage';
 import { catalogModel } from 'entities/catalog';
+import { getServerSideStore } from '../../store';
 
 type CatalogProps = {
   products: Product[];
@@ -19,6 +20,7 @@ const categoryId = '6206cc322d75374955d3e9e6';
 export const getServerSideProps = async () => {
   const store = initStore();
   // await store.dispatch(getProductsThunk(categoryId));
+  // const defaultServerSideProps = await getServerSideStore();
   await store.dispatch(
     catalogModel.thunks.loadProductsWithPagination({
       categoryId,
