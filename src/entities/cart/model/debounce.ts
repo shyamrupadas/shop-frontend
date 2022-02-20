@@ -1,4 +1,4 @@
-import { AsyncThunk } from '@reduxjs/toolkit';
+import { AnyAction, AsyncThunk, ThunkDispatch } from '@reduxjs/toolkit';
 import { BaseThunkAPI } from '@reduxjs/toolkit/dist/createAsyncThunk';
 import { Cart } from 'shared/types';
 import { RootState } from 'store/store';
@@ -7,7 +7,7 @@ export let debounceTimer: NodeJS.Timeout | null = null;
 
 export const debounce = (
   userId: string,
-  thunkApi: any,
+  dispatch: ThunkDispatch<RootState, unknown, AnyAction>,
   debounceCartThunk: AsyncThunk<Cart, string, { state: RootState }>,
 ) => {
   if (debounceTimer) {
@@ -19,7 +19,7 @@ export const debounce = (
 
   debounceTimer = setTimeout(() => {
     console.log('debounce stop, send request');
-    thunkApi.dispatch(debounceCartThunk(userId));
+    dispatch(debounceCartThunk(userId));
     debounceTimer = null;
   }, 2000);
 };
