@@ -3,10 +3,10 @@ import { Container, Grid, Typography } from '@mui/material';
 import ProductsItem from '../entities/product/ui/ProductsItem';
 import { AddToCart } from '../features/add-to-cart';
 import { useSelector } from 'react-redux';
-import productsSelectors from '../entities/product/model/productsSelectors';
+import { productsSelector } from '../entities/product/model';
 
 export const CatalogPage = () => {
-  const products = useSelector(productsSelectors.products);
+  const products = useSelector(productsSelector.products);
 
   return (
     <Container maxWidth="lg">
