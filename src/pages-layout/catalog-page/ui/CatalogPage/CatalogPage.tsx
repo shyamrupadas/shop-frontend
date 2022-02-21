@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import { Container, Grid, Typography } from '@mui/material';
 import ProductsItem from 'entities/product/ui/ProductsItem';
 import { AddToCart } from 'features/add-to-cart';
@@ -17,7 +17,11 @@ const CatalogPage = () => {
   const catalog = useAppSelector(catalogModel.selectors.catalog);
   const status = useAppSelector(catalogModel.selectors.status);
   const currentPage = useAppSelector(catalogModel.selectors.currentPage);
-  const products = Object.values(catalog.data).flat();
+  const products = useMemo(
+    () => Object.values(catalog.data).flat(),
+    [catalog.data],
+  );
+
   const isLoading = status === 'pending';
   const hasNextPage = currentPage < catalog.lastPage;
   const fetchNextPage = useCallback(() => {
