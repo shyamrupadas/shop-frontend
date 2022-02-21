@@ -4,7 +4,7 @@ import {
   List,
   WindowScroller,
 } from 'react-virtualized';
-import React, { useRef } from 'react';
+import React, { Fragment, useRef } from 'react';
 import { Grid, Stack, Typography } from '@mui/material';
 import { Product } from 'shared/types';
 
@@ -105,7 +105,9 @@ const InfinityProductsList = ({
                           key={key}
                         >
                           {productsInRow.map((product, itemIndex) => (
-                            <>{children(product, key)}</>
+                            <Fragment key={product._id}>
+                              {children(product, key)}
+                            </Fragment>
                           ))}
                         </Stack>
                       );
