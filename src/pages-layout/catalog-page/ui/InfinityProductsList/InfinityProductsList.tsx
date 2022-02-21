@@ -7,22 +7,6 @@ import {
 import React, { useRef } from 'react';
 import { Grid, Stack, Typography } from '@mui/material';
 import { Product } from 'shared/types';
-import { makeStyles } from '@mui/styles';
-
-const useStyles = makeStyles((theme: any) => ({
-  grid: {
-    marginTop: '10px',
-    marginBottom: '10px',
-    justifyContent: 'center',
-  },
-  gridItem: {
-    padding: '15px',
-  },
-  row: {
-    display: 'flex',
-    justifyContent: 'center',
-  },
-}));
 
 const noRowsRenderer = () => (
   <Grid item>
@@ -65,13 +49,12 @@ const InfinityProductsList = ({
   fetchItems = () => {},
   hasMore = false,
   itemWidth = 200,
-  itemHeight = 390,
+  itemHeight = 410,
   products = [],
   children,
   rowsCount,
 }: InfinityProductsListProps) => {
   const infiniteLoaderRef = useRef<InfiniteLoader>(null);
-  const classes = useStyles();
 
   const loadMoreRows = async () => {
     if (!isFetching) {
@@ -98,7 +81,7 @@ const InfinityProductsList = ({
               <WindowScroller>
                 {({ height, scrollTop }) => (
                   <List
-                    className={classes.grid}
+                    className={'InfinityProductsList'}
                     autoHeight
                     ref={registerChild}
                     height={height}

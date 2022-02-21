@@ -35,8 +35,10 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 const Catalog: NextPage = () => {
   const router = useRouter();
   const pid = typeof router.query.pid === 'string' ? router.query.pid : '';
+  // TODO: Почему название категории передается через роутинг?
   const name = typeof router.query.name === 'string' ? router.query.name : '';
 
+  // TODO: Удалить. Уже не актуально
   productsHooks.useProductsLoad(pid);
 
   return (
