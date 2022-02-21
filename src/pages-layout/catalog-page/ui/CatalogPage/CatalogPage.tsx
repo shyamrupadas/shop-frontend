@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo } from 'react';
-import { Container, Typography } from '@mui/material';
+import { Box, Container, Typography } from '@mui/material';
 import ProductsItem from 'entities/product/ui/ProductsItem';
 import { AddToCart } from 'features/add-to-cart';
 import { useAppDispatch, useAppSelector } from 'store';
@@ -72,9 +72,11 @@ const CatalogPage = ({ name }: CatalogPageProps) => {
         rowsCount={catalog.length / 5} // TODO: !!!
       >
         {(product, key) => (
-          <ProductsItem product={product} key={key}>
-            <AddToCart product={product} />
-          </ProductsItem>
+          <Box key={key}>
+            <ProductsItem product={product}>
+              <AddToCart product={product} />
+            </ProductsItem>
+          </Box>
         )}
       </InfinityProductsList>
     </Container>

@@ -14,3 +14,10 @@ a {
 * {
   box-sizing: border-box;
 }
+
+.InfinityProductsList.ReactVirtualized__Grid {
+  overflow: visible !important;
+}
+.InfinityProductsList .ReactVirtualized__Grid__innerScrollContainer {
+  overflow: visible !important;
+}
