@@ -1,15 +1,17 @@
 import React, { useCallback, useEffect, useMemo } from 'react';
-import { Container, Grid, Typography } from '@mui/material';
+import { Container, Typography } from '@mui/material';
 import ProductsItem from 'entities/product/ui/ProductsItem';
 import { AddToCart } from 'features/add-to-cart';
-import { useSelector } from 'react-redux';
-import productsSelectors from 'entities/product/model/productsSelectors';
 import { useAppDispatch, useAppSelector } from 'store';
 import { catalogModel } from 'entities/catalog';
 import { useRouter } from 'next/router';
 import InfinityProductsList from '../InfinityProductsList';
 
-const CatalogPage = () => {
+type CatalogPageProps = {
+  name: string;
+};
+
+const CatalogPage = ({ name }: CatalogPageProps) => {
   const router = useRouter();
   const { categoryId } = router.query;
   const dispatch = useAppDispatch();
@@ -59,8 +61,7 @@ const CatalogPage = () => {
   return (
     <Container maxWidth="lg">
       <Typography gutterBottom variant="h4" component="h2">
-        {/*Todo получать название категории из стейта*/}
-        Вода, соки, напитки {categoryId}
+        {name}
       </Typography>
 
       <InfinityProductsList

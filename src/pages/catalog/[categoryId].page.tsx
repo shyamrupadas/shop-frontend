@@ -1,34 +1,29 @@
 import React from 'react';
 import MainLayout from '../MainLayout';
-import { NextPage } from 'next';
+import { GetServerSideProps, NextPage } from 'next';
 import { useRouter } from 'next/router';
-import { Product } from 'shared/types';
-import { initStore } from 'store/store';
-import { getProductsThunk } from 'entities/product/model/productsThunk';
-// import { CatalogPage } from '../../pages-layout/CatalogPage';
+import { getStore } from 'store/store';
 import { default as CatalogPage } from 'pages-layout/catalog-page/ui/CatalogPage';
 import { catalogModel } from 'entities/catalog';
-import { getServerSideStore } from '../../store';
 
-type CatalogProps = {
-  products: Product[];
-};
+import { getServerSideStore } from 'store';
+import { productsHooks } from 'entities/product/model';
 
-// Todo: categoryId должно приходить из роутинга
-const categoryId = '6206cc322d75374955d3e9e6';
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const store = getStore();
+  const categoryId = context.params?.categoryId;
 
-export const getServerSideProps = async () => {
-  const store = initStore();
-  // await store.dispatch(getProductsThunk(categoryId));
-  // const defaultServerSideProps = await getServerSideStore();
+  await getServerSideStore();
 
-  await store.dispatch(
-    catalogModel.thunks.loadProductsWithPagination({
-      categoryId,
-      page: 1,
-      limit: 20,
-    }),
-  );
+  if (typeof categoryId === 'string') {
+    await store.dispatch(
+      catalogModel.thunks.loadProductsWithPagination({
+        categoryId,
+        page: 1,
+        limit: 20,
+      }),
+    );
+  }
 
   return {
     props: {
@@ -37,13 +32,16 @@ export const getServerSideProps = async () => {
   };
 };
 
-const Catalog: NextPage<CatalogProps> = () => {
+const Catalog: NextPage = () => {
   const router = useRouter();
-  const { pid } = router.query;
+  const pid = typeof router.query.pid === 'string' ? router.query.pid : '';
+  const name = typeof router.query.name === 'string' ? router.query.name : '';
+
+  productsHooks.useProductsLoad(pid);
 
   return (
     <MainLayout title="Каталог">
-      <CatalogPage />
+      <CatalogPage name={name} />
     </MainLayout>
   );
 };

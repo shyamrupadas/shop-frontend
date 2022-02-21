@@ -1,34 +1,25 @@
 import { Box, Stack, Typography } from '@mui/material';
-import { Category, Product } from 'shared/types/types';
+import { Category } from 'shared/types';
 import ProductsItem from './ProductsItem';
 import { AddToCart } from 'features/add-to-cart';
-import { useWindowWidth } from 'shared/hooks/useWindowWidth';
 import Link from 'next/link';
 
 type ProductsListProps = {
   category: Category;
+  rowItems: number;
 };
 
-const ProductsList = ({ category }: ProductsListProps) => {
-  const width = useWindowWidth();
-
-  let renderingProducts: Product[];
-
-  if (width > 1200) {
-    renderingProducts = category.products.slice(0, 5);
-  } else if (width > 960) {
-    renderingProducts = category.products.slice(0, 4);
-  } else if (width > 720) {
-    renderingProducts = category.products.slice(0, 3);
-  } else if (width > 480) {
-    renderingProducts = category.products.slice(0, 2);
-  } else {
-    renderingProducts = category.products.slice(0, 1);
-  }
+const ProductsList = ({ category, rowItems }: ProductsListProps) => {
+  const renderingProducts = category.products.slice(0, rowItems);
 
   return (
     <Box>
-      <Link href={'/catalog/' + category._id}>
+      <Link
+        href={{
+          pathname: `/catalog/${category._id}`,
+          query: { name: category.name },
+        }}
+      >
         <a>
           <Typography gutterBottom variant="h4" component="h2">
             {category.name}
