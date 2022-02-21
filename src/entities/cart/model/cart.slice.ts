@@ -88,16 +88,15 @@ const cartSlice = createSlice({
           return;
         }
 
-        if (cartProduct.count >= cartProductFromResponse.count) {
+        if (cartProduct.count > cartProductFromResponse.count) {
           cartProduct.count = cartProductFromResponse.count;
           cartProduct.isMaxCount = true;
+          state.notification = {
+            overstockedProductsIds: Array.from(productsOverflowMap.values()),
+          };
         } else {
           productsOverflowMap.delete(productId);
         }
-
-        state.notification = {
-          overstockedProductsIds: Array.from(productsOverflowMap.values()),
-        };
       });
     });
   },
