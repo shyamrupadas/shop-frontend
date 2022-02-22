@@ -5,9 +5,8 @@ import { useRouter } from 'next/router';
 import { getStore } from 'store/store';
 import { default as CatalogPage } from 'pages-layout/catalog-page/ui/CatalogPage';
 import { catalogModel } from 'entities/catalog';
-
 import { getServerSideStore } from 'store';
-import { productsHooks } from 'entities/product/model';
+import { useWindowWidth } from 'shared/hooks/useWindowWidth';
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const store = getStore();
@@ -38,12 +37,11 @@ const Catalog: NextPage = () => {
   // TODO: Почему название категории передается через роутинг?
   const name = typeof router.query.name === 'string' ? router.query.name : '';
 
-  // TODO: Удалить. Уже не актуально
-  productsHooks.useProductsLoad(pid);
+  const rowItemsNumber = useWindowWidth();
 
   return (
     <MainLayout title="Каталог">
-      <CatalogPage name={name} />
+      <CatalogPage name={name} rowItemsNumber={rowItemsNumber} />
     </MainLayout>
   );
 };
