@@ -12,6 +12,9 @@ type CatalogPageProps = {
   rowItemsNumber: number;
 };
 
+/**
+ * TODO: Слишком много всего в компоненте. Лучше вынести логику в хуки
+ */
 const CatalogPage = ({ name, rowItemsNumber }: CatalogPageProps) => {
   const router = useRouter();
   const { categoryId } = router.query;
@@ -20,19 +23,23 @@ const CatalogPage = ({ name, rowItemsNumber }: CatalogPageProps) => {
   const catalog = useAppSelector(catalogModel.selectors.catalog);
   const catalogLength = catalog.length;
   const columnItemsNumber = catalog.columnItemsNumber;
-  const rowsCount = catalog.page * columnItemsNumber;
   const status = useAppSelector(catalogModel.selectors.status);
   const currentPage = useAppSelector(catalogModel.selectors.currentPage);
   const rows = catalog.rows;
 
-  const isLoading = status === 'pending';
+  const productsCount = useMemo(() => {
+    return Object.values(rows).reduce((count, row) => row.length + count, 0);
+  }, [rows]);
+
+  const rowsCount = Math.ceil(productsCount / rowItemsNumber) + 4;
+  const maxRows = Math.ceil(catalog.length / rowItemsNumber);
   const hasNextPage = currentPage < catalog.lastPage;
+
+  const isLoading = status === 'pending';
   const fetchNextPage = useCallback(() => {
     if (typeof categoryId !== 'string') {
       return;
     }
-
-    console.log('fetchNextPage:', currentPage + 1);
 
     dispatch(
       catalogModel.thunks.loadProductsWithPagination({
@@ -70,7 +77,7 @@ const CatalogPage = ({ name, rowItemsNumber }: CatalogPageProps) => {
         hasMore={hasNextPage}
         isFetching={isLoading}
         fetchItems={fetchNextPage}
-        rowsCount={rowsCount}
+        rowsCount={rowsCount < maxRows ? rowsCount : maxRows}
       >
         {(product, key) => (
           <Box key={key}>
