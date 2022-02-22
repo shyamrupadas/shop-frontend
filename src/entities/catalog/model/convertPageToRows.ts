@@ -20,8 +20,7 @@ export const convertPageToRows = ({
   let result: { [rowIndex: number]: Product[] } = {};
 
   for (let i = startIndex; i < stopIndex; i += 1) {
-    const row = data.slice(itemsCounter, itemsCounter + rowItemsNumber);
-    result[i] = row;
+    result[i] = data.slice(itemsCounter, itemsCounter + rowItemsNumber);
     itemsCounter += rowItemsNumber;
   }
 
