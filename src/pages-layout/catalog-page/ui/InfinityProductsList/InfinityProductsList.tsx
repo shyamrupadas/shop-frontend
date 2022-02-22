@@ -7,6 +7,8 @@ import {
 import React, { Fragment, useRef } from 'react';
 import { Grid, Stack, Typography } from '@mui/material';
 import { Product } from 'shared/types';
+import { useAppSelector } from 'store';
+import { catalogModel } from 'entities/catalog';
 
 const noRowsRenderer = () => (
   <Grid item>
@@ -14,28 +16,9 @@ const noRowsRenderer = () => (
   </Grid>
 );
 
-const getProductsInCurrentRow = (
-  rowIndex: number,
-  products: Product[],
-): Product[] => {
-  let productsInRow = [];
-  const numberOfItemsPerLine = 5; // TODO: !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  const startIndex = rowIndex * numberOfItemsPerLine;
-
-  for (
-    let i = startIndex;
-    i < Math.min(startIndex + numberOfItemsPerLine, products?.length);
-    i++
-  ) {
-    productsInRow.push(products[i]);
-  }
-
-  return productsInRow;
-};
-
 type InfinityProductsListProps = {
   children: (item: Product, key: string) => React.ReactNode;
-  products?: Product[];
+  rows: { [rowIndex: number]: Product[] };
   hasMore?: boolean;
   isFetching?: boolean;
   fetchItems?: Function;
@@ -50,11 +33,14 @@ const InfinityProductsList = ({
   hasMore = false,
   itemWidth = 200,
   itemHeight = 410,
-  products = [],
+  rows = {},
   children,
   rowsCount,
 }: InfinityProductsListProps) => {
   const infiniteLoaderRef = useRef<InfiniteLoader>(null);
+  const catalog = useAppSelector(catalogModel.selectors.catalog);
+  const page = catalog.page;
+  const columnItemsNumber = catalog.columnItemsNumber;
 
   const loadMoreRows = async () => {
     if (!isFetching) {
@@ -71,11 +57,11 @@ const InfinityProductsList = ({
             rowCount={rowsCount}
             isRowLoaded={({ index }) => {
               // TODO: !!!!!!!!!
-              return index + 1 <= products?.length / 5;
+              return index + columnItemsNumber < page * columnItemsNumber;
             }}
             loadMoreRows={loadMoreRows}
             threshold={1}
-            minimumBatchSize={10}
+            minimumBatchSize={3}
           >
             {({ onRowsRendered, registerChild }) => (
               <WindowScroller>
@@ -91,10 +77,10 @@ const InfinityProductsList = ({
                     rowHeight={itemHeight}
                     onRowsRendered={onRowsRendered}
                     rowRenderer={({ index, style, key }) => {
-                      const productsInRow = getProductsInCurrentRow(
-                        index,
-                        products,
-                      );
+                      console.log(index, rows[index]);
+                      // тут периодически валят undefined, возможно отрегулировать?
+                      // сейчас InfiniteLoader хочет загружать по 13 рядов вниз от верхнего
+                      const productsInRow = rows[index] ? rows[index] : [];
 
                       return (
                         <Stack
