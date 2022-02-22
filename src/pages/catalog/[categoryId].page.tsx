@@ -41,21 +41,22 @@ const Catalog: NextPage = () => {
     typeof router.query.categoryId === 'string' ? router.query.categoryId : '';
 
   const catalog = useAppSelector(catalogModel.selectors.catalog);
+  const rowItemsNumber = useWindowWidth();
+  const isRowsChanges =
+    catalog.limit / rowItemsNumber !== catalog.columnItemsNumber;
 
   useEffect(() => {
-    if (categoryId !== catalog.categoryId) {
+    if (categoryId !== catalog.categoryId || isRowsChanges) {
       dispatch(refreshCatalog());
       dispatch(setCategoryId(categoryId));
     }
-  }, [catalog.categoryId, categoryId, dispatch]);
+  }, [catalog.categoryId, categoryId, dispatch, isRowsChanges]);
 
   const category = useAppSelector((state) =>
     categoriesSelector.categoryById(state, categoryId),
   );
 
   const name = typeof category !== 'undefined' ? category.name : '';
-
-  const rowItemsNumber = useWindowWidth();
 
   return (
     <MainLayout title="Каталог">
