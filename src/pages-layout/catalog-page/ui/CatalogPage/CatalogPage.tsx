@@ -19,8 +19,8 @@ const CatalogPage = ({ name, rowItemsNumber }: CatalogPageProps) => {
 
   const catalog = useAppSelector(catalogModel.selectors.catalog);
   const catalogLength = catalog.length;
-  const rowsCount = Math.ceil(catalogLength / rowItemsNumber);
   const columnItemsNumber = catalog.columnItemsNumber;
+  const rowsCount = catalog.page * columnItemsNumber;
   const status = useAppSelector(catalogModel.selectors.status);
   const currentPage = useAppSelector(catalogModel.selectors.currentPage);
   const rows = catalog.rows;
