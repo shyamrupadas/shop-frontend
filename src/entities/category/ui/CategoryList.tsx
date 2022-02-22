@@ -7,20 +7,7 @@ import { useWindowWidth } from 'shared/hooks/useWindowWidth';
 
 const CategoryList = () => {
   const categories = useSelector(categoriesSelector.categories);
-  const width = useWindowWidth();
-  let rowItems = 5;
-
-  if (width > 1200) {
-    rowItems = 5;
-  } else if (width > 960) {
-    rowItems = 4;
-  } else if (width > 720) {
-    rowItems = 3;
-  } else if (width > 480) {
-    rowItems = 2;
-  } else {
-    rowItems = 1;
-  }
+  const rowItems = useWindowWidth();
 
   return (
     <div className={styles.wrapper}>
