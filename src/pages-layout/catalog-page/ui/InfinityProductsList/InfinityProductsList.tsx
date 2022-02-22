@@ -5,7 +5,7 @@ import {
   WindowScroller,
 } from 'react-virtualized';
 import React, { Fragment, useCallback } from 'react';
-import { Grid, Stack, Typography } from '@mui/material';
+import { Box, Grid, Stack, Typography } from '@mui/material';
 import { Product } from 'shared/types';
 import { useAppSelector } from 'store';
 import { catalogModel } from 'entities/catalog';
@@ -100,22 +100,23 @@ const InfinityProductsList = ({
             minimumBatchSize={4}
           >
             {({ onRowsRendered, registerChild }) => (
-              <WindowScroller>
-                {({ height, scrollTop }) => (
-                  <List
-                    autoHeight
-                    overscanRowCount={4}
-                    className={'InfinityProductsList'}
-                    scrollTop={scrollTop}
-                    ref={registerChild}
-                    height={isServer ? ssrListHeight : height}
-                    width={isServer ? ssrListWidth : rowWidth}
-                    rowCount={isServer ? ssrRowsCount : rowsCount}
-                    rowHeight={itemHeight}
-                    onRowsRendered={onRowsRendered}
-                    rowRenderer={rowRenderer}
-                    noRowsRenderer={noRowsRenderer}
-                  />
+              <WindowScroller ref={registerChild}>
+                {({ height, scrollTop, registerChild }) => (
+                  <Box ref={registerChild}>
+                    <List
+                      autoHeight
+                      overscanRowCount={4}
+                      className={'InfinityProductsList'}
+                      scrollTop={scrollTop}
+                      height={isServer ? ssrListHeight : height}
+                      width={isServer ? ssrListWidth : rowWidth}
+                      rowCount={isServer ? ssrRowsCount : rowsCount}
+                      rowHeight={itemHeight}
+                      onRowsRendered={onRowsRendered}
+                      rowRenderer={rowRenderer}
+                      noRowsRenderer={noRowsRenderer}
+                    />
+                  </Box>
                 )}
               </WindowScroller>
             )}
