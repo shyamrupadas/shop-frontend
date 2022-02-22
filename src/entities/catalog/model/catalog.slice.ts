@@ -74,3 +74,4 @@ const catalogSlice = createSlice({
 
 export const { actions } = catalogSlice;
 export const catalogReducer = catalogSlice.reducer;
+export const initialCatalogState = initialState;
