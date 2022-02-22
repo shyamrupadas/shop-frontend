@@ -9,20 +9,21 @@ import InfinityProductsList from '../InfinityProductsList';
 
 type CatalogPageProps = {
   name: string;
+  rowItemsNumber: number;
 };
 
-const CatalogPage = ({ name }: CatalogPageProps) => {
+const CatalogPage = ({ name, rowItemsNumber }: CatalogPageProps) => {
   const router = useRouter();
   const { categoryId } = router.query;
   const dispatch = useAppDispatch();
 
   const catalog = useAppSelector(catalogModel.selectors.catalog);
+  const catalogLength = catalog.length;
+  const rowsCount = Math.ceil(catalogLength / rowItemsNumber);
+  const columnItemsNumber = catalog.columnItemsNumber;
   const status = useAppSelector(catalogModel.selectors.status);
   const currentPage = useAppSelector(catalogModel.selectors.currentPage);
-  const products = useMemo(
-    () => Object.values(catalog.data).flat(),
-    [catalog.data],
-  );
+  const rows = catalog.rows;
 
   const isLoading = status === 'pending';
   const hasNextPage = currentPage < catalog.lastPage;
@@ -37,10 +38,10 @@ const CatalogPage = ({ name }: CatalogPageProps) => {
       catalogModel.thunks.loadProductsWithPagination({
         categoryId,
         page: currentPage + 1,
-        limit: 20,
+        limit: rowItemsNumber * columnItemsNumber,
       }),
     );
-  }, [currentPage, categoryId, dispatch]);
+  }, [categoryId, columnItemsNumber, currentPage, dispatch, rowItemsNumber]);
 
   useEffect(() => {
     if (typeof categoryId !== 'string') {
@@ -52,11 +53,11 @@ const CatalogPage = ({ name }: CatalogPageProps) => {
         catalogModel.thunks.loadProductsWithPagination({
           categoryId,
           page: 1,
-          limit: 20,
+          limit: rowItemsNumber * columnItemsNumber,
         }),
       );
     }
-  }, [status, categoryId, dispatch]);
+  }, [status, categoryId, dispatch, rowItemsNumber, columnItemsNumber]);
 
   return (
     <Container maxWidth="lg">
@@ -65,11 +66,11 @@ const CatalogPage = ({ name }: CatalogPageProps) => {
       </Typography>
 
       <InfinityProductsList
-        products={products}
+        rows={rows}
         hasMore={hasNextPage}
         isFetching={isLoading}
         fetchItems={fetchNextPage}
-        rowsCount={catalog.length / 5} // TODO: !!!
+        rowsCount={rowsCount}
       >
         {(product, key) => (
           <Box key={key}>
