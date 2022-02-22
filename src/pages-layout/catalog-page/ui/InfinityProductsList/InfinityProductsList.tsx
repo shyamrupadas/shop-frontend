@@ -9,7 +9,7 @@ import { Box, Grid, Stack, Typography } from '@mui/material';
 import { Product } from 'shared/types';
 import { useAppSelector } from 'store';
 import { catalogModel } from 'entities/catalog';
-import { isServer } from 'shared/lib';
+import { isBrowser, isServer } from 'shared/lib';
 import { ListRowRenderer } from 'react-virtualized/dist/es/List';
 
 type InfinityProductsListProps = {
@@ -102,7 +102,13 @@ const InfinityProductsList = ({
             {({ onRowsRendered, registerChild }) => (
               <WindowScroller ref={registerChild}>
                 {({ height, scrollTop, registerChild }) => (
-                  <Box ref={registerChild}>
+                  <Box
+                    ref={() => {
+                      if (isBrowser) {
+                        registerChild(document.body);
+                      }
+                    }}
+                  >
                     <List
                       autoHeight
                       overscanRowCount={4}
