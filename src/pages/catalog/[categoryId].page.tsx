@@ -1,12 +1,14 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import MainLayout from '../MainLayout';
 import { GetServerSideProps, NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { getStore } from 'store/store';
 import { default as CatalogPage } from 'pages-layout/catalog-page/ui/CatalogPage';
 import { catalogModel } from 'entities/catalog';
-import { getServerSideStore } from 'store';
+import { getServerSideStore, useAppDispatch, useAppSelector } from 'store';
 import { useWindowWidth } from 'shared/hooks/useWindowWidth';
+import categoriesSelector from 'entities/category/model/categoriesSelectors';
+import { refreshCatalog, setCategoryId } from 'entities/catalog/model';
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const store = getStore();
@@ -33,9 +35,25 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
 const Catalog: NextPage = () => {
   const router = useRouter();
-  const pid = typeof router.query.pid === 'string' ? router.query.pid : '';
-  // TODO: Почему название категории передается через роутинг?
-  const name = typeof router.query.name === 'string' ? router.query.name : '';
+  const dispatch = useAppDispatch();
+
+  const categoryId =
+    typeof router.query.categoryId === 'string' ? router.query.categoryId : '';
+
+  const catalog = useAppSelector(catalogModel.selectors.catalog);
+
+  useEffect(() => {
+    if (categoryId !== catalog.categoryId) {
+      dispatch(refreshCatalog());
+      dispatch(setCategoryId(categoryId));
+    }
+  }, [catalog.categoryId, categoryId, dispatch]);
+
+  const category = useAppSelector((state) =>
+    categoriesSelector.categoryById(state, categoryId),
+  );
+
+  const name = typeof category !== 'undefined' ? category.name : '';
 
   const rowItemsNumber = useWindowWidth();
 
