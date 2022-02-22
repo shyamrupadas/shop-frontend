@@ -12,13 +12,15 @@ type CartPageWrapper = {
 
 const CartPageWrapper = ({ children }: CartPageWrapper) => {
   return (
-    <Container maxWidth="lg">
-      <Typography variant="h1" gutterBottom>
-        Корзина
-      </Typography>
+    <Box>
+      <Container maxWidth="lg">
+        <Typography variant="h4" component="h1" gutterBottom>
+          Корзина
+        </Typography>
 
-      {children}
-    </Container>
+        {children}
+      </Container>
+    </Box>
   );
 };
 
