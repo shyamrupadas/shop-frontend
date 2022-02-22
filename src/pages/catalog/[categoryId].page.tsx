@@ -37,6 +37,7 @@ const Catalog: NextPage = () => {
   // TODO: Почему название категории передается через роутинг?
   const name = typeof router.query.name === 'string' ? router.query.name : '';
 
+  // TODO: Убрать из пропсов и получать значение внутри компонента
   const rowItemsNumber = useWindowWidth();
 
   return (
