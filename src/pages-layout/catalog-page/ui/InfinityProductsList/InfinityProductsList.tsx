@@ -5,7 +5,7 @@ import {
   WindowScroller,
 } from 'react-virtualized';
 import React, { Fragment, useCallback } from 'react';
-import { Box, Grid, Stack, Typography } from '@mui/material';
+import { Grid, Stack, Typography } from '@mui/material';
 import { Product } from 'shared/types';
 import { useAppSelector } from 'store';
 import { catalogModel } from 'entities/catalog';
@@ -101,14 +101,12 @@ const InfinityProductsList = ({
           >
             {({ onRowsRendered, registerChild }) => (
               <WindowScroller ref={registerChild}>
-                {({ height, scrollTop, registerChild }) => (
-                  <Box
-                    ref={() => {
-                      if (isBrowser) {
-                        registerChild(document.body);
-                      }
-                    }}
-                  >
+                {({ height, scrollTop, registerChild }) => {
+                  if (isBrowser) {
+                    registerChild(document.body);
+                  }
+
+                  return (
                     <List
                       autoHeight
                       overscanRowCount={4}
@@ -122,8 +120,8 @@ const InfinityProductsList = ({
                       rowRenderer={rowRenderer}
                       noRowsRenderer={noRowsRenderer}
                     />
-                  </Box>
-                )}
+                  );
+                }}
               </WindowScroller>
             )}
           </InfiniteLoader>
