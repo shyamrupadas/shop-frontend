@@ -5,6 +5,7 @@ import { useStore } from 'store/store';
 
 function MyApp({ Component, pageProps }: AppProps) {
   const store = useStore(pageProps?.preloadedState);
+  console.log(pageProps?.preloadedState);
 
   return (
     <Provider store={store}>

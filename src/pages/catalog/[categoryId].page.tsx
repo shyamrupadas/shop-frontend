@@ -7,14 +7,16 @@ import { default as CatalogPage } from 'pages-layout/catalog-page/ui/CatalogPage
 import { catalogModel } from 'entities/catalog';
 import { getServerSideStore } from 'store';
 import { useWindowWidth } from 'shared/hooks/useWindowWidth';
-import { initialCatalogState } from 'entities/catalog/model';
+import { refreshCatalog } from 'entities/catalog/model';
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const store = getStore();
   const categoryId = context.params?.categoryId;
 
   await getServerSideStore();
-  store.getState().catalog = initialCatalogState;
+  console.log(store.getState().catalog.catalogInfo);
+  store.dispatch(refreshCatalog(store.getState()));
+  console.log(store.getState().catalog.catalogInfo);
 
   if (typeof categoryId === 'string') {
     await store.dispatch(

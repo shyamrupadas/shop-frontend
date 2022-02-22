@@ -30,7 +30,18 @@ const initialState: CatalogState = {
 const catalogSlice = createSlice({
   name: 'catalog',
   initialState,
-  reducers: {},
+  reducers: {
+    refreshCatalog: (state, action) => {
+      state.catalogInfo.length = 0;
+      state.catalogInfo.length = 0;
+      state.catalogInfo.page = 0;
+      state.catalogInfo.limit = 0;
+      state.catalogInfo.lastPage = 0;
+      state.catalogInfo.columnItemsNumber = 4;
+      state.catalogInfo.rows = {};
+      state.catalogInfo.status = 'idle';
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(
       loadProductsWithPagination.pending,
@@ -72,6 +83,5 @@ const catalogSlice = createSlice({
   },
 });
 
-export const { actions } = catalogSlice;
+export const { refreshCatalog } = catalogSlice.actions;
 export const catalogReducer = catalogSlice.reducer;
-export const initialCatalogState = initialState;

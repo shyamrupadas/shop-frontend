@@ -77,7 +77,7 @@ const InfinityProductsList = ({
                     rowHeight={itemHeight}
                     onRowsRendered={onRowsRendered}
                     rowRenderer={({ index, style, key }) => {
-                      console.log(index, rows[index]);
+                      // console.log(index, rows[index]);
                       // тут периодически валят undefined, возможно отрегулировать?
                       // сейчас InfiniteLoader хочет загружать по 13 рядов вниз от верхнего
                       const productsInRow = rows[index] ? rows[index] : [];
