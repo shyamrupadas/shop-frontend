@@ -1,24 +1,19 @@
 import { Box, Stack, Typography } from '@mui/material';
 import { Category } from 'shared/types';
-import ProductsItem from './ProductsItem';
-import { AddToCart } from 'features/add-to-cart';
 import Link from 'next/link';
+import React from 'react';
 
 type ProductsListProps = {
   category: Category;
-  rowItems: number;
+  children: React.ReactNode;
 };
 
-const ProductsList = ({ category, rowItems }: ProductsListProps) => {
-  const renderingProducts = category.products.slice(0, rowItems);
+const ProductsList = ({ category, children }: ProductsListProps) => {
+  const pathname = `/catalog/${category._id}`;
 
   return (
     <Box>
-      <Link
-        href={{
-          pathname: `/catalog/${category._id}`,
-        }}
-      >
+      <Link href={{ pathname }}>
         <a>
           <Typography gutterBottom variant="h4" component="h2">
             {category.name}
@@ -27,12 +22,7 @@ const ProductsList = ({ category, rowItems }: ProductsListProps) => {
       </Link>
 
       <Stack direction="row" justifyContent="center" spacing={5}>
-        {renderingProducts.map((product) => (
-          <ProductsItem key={product._id} product={product}>
-            {/* TODO: AddToCart не должен тут находиться. Композиция должна быть на уровне widget, page или app */}
-            <AddToCart product={product} />
-          </ProductsItem>
-        ))}
+        {children}
       </Stack>
     </Box>
   );

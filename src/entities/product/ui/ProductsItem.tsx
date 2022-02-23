@@ -6,12 +6,14 @@ import { Card, CardMedia, Grid, Typography } from '@mui/material';
 type ProductsItemProps = {
   product: Product;
   children?: React.ReactNode;
+  onClick: () => void;
 };
 
-const ProductsItem = ({ product, children }: ProductsItemProps) => {
+const ProductsItem = ({ product, children, onClick }: ProductsItemProps) => {
   return (
     <div className={styles.wrapper}>
       <Card
+        onClick={onClick}
         sx={{
           width: 200,
           height: 390,
@@ -34,6 +36,7 @@ const ProductsItem = ({ product, children }: ProductsItemProps) => {
         >
           {product.unitMeasure}
         </Typography>
+
         <CardMedia
           component="img"
           width="168"

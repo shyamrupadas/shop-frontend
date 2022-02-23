@@ -1,11 +1,10 @@
 import React, { useCallback, useEffect, useMemo } from 'react';
 import { Box, Container, Typography } from '@mui/material';
-import ProductsItem from 'entities/product/ui/ProductsItem';
-import { AddToCart } from 'features/add-to-cart';
 import { useAppDispatch, useAppSelector } from 'store';
 import { catalogModel } from 'entities/catalog';
 import { useRouter } from 'next/router';
 import InfinityProductsList from '../InfinityProductsList';
+import { ProductCard } from 'widgets/product-card';
 
 type CatalogPageProps = {
   name: string;
@@ -93,9 +92,7 @@ const CatalogPage = ({ name, rowItemsNumber }: CatalogPageProps) => {
       >
         {(product, key) => (
           <Box key={key}>
-            <ProductsItem product={product}>
-              <AddToCart product={product} />
-            </ProductsItem>
+            <ProductCard product={product} />
           </Box>
         )}
       </InfinityProductsList>
