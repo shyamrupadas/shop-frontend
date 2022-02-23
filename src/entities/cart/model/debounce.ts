@@ -1,5 +1,4 @@
 import { AnyAction, AsyncThunk, ThunkDispatch } from '@reduxjs/toolkit';
-import { BaseThunkAPI } from '@reduxjs/toolkit/dist/createAsyncThunk';
 import { Cart } from 'shared/types';
 import { RootState } from 'store/store';
 

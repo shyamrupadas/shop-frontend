@@ -11,10 +11,8 @@ const {
   (state: RootState): EntityState<Category> => state.categories,
 );
 
-const categoriesSelector = {
+export const categoriesSelector = {
   categoriesIds,
   categoryById,
   categories,
 };
-
-export default categoriesSelector;

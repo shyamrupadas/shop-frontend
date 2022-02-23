@@ -2,7 +2,6 @@ import {
   Box,
   Card,
   CardContent,
-  Paper,
   Popover,
   Stack,
   Typography,

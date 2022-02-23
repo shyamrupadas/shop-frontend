@@ -17,11 +17,11 @@ import { RootState, useAppDispatch, useAppSelector } from 'store/store';
 import { userModel } from 'entities/user';
 import { cartModel } from '..';
 
-export function useCartSelector(): Cart | null {
+export const useCartSelector = (): Cart | null => {
   return useSelector(cart);
-}
+};
 
-export function useCartIncrementDecrement() {
+export const useCartIncrementDecrement = () => {
   const dispatch = useAppDispatch();
 
   const incrementProductCount = useCallback(
@@ -42,33 +42,33 @@ export function useCartIncrementDecrement() {
     incrementProductCount,
     decrementProductCount,
   };
-}
+};
 
 /**
  * Возвращает сумму для отдельного продукта в корзине (кол-во продукта в корзане умноженное на число) или null
  */
-export function usePositionSumSelector(productId: ProductId): number | null {
+export const usePositionSumSelector = (productId: ProductId): number | null => {
   return useAppSelector((state) => positionSum(state, productId));
-}
+};
 
-export function useCartProductSelector(
+export const useCartProductSelector = (
   productId: ProductId,
-): CartProduct | null {
+): CartProduct | null => {
   return useSelector<RootState, CartProduct | null>((state) =>
     productById(state, productId),
   );
-}
+};
 
-export function useCartProductCountSelector(productId: ProductId): number {
+export const useCartProductCountSelector = (productId: ProductId): number => {
   const cartProduct = useCartProductSelector(productId);
 
   return cartProduct?.count || 0;
-}
+};
 
 /**
  * Загружает с сервера корзину и закидывает ее в стор
  */
-export function useCartLoad(): void {
+export const useCartLoad = (): void => {
   const user = userModel.hooks.useUserSelector();
   const dispatch = useAppDispatch();
   const userId = user._id;
@@ -80,9 +80,9 @@ export function useCartLoad(): void {
       promise.abort();
     };
   }, [userId, dispatch]);
-}
+};
 
-export function useCartReset() {
+export const useCartReset = () => {
   const dispatch = useAppDispatch();
   const user = userModel.hooks.useUserSelector();
   const userId = user._id;
@@ -91,11 +91,11 @@ export function useCartReset() {
     () => dispatch(resetCartThunk(userId)),
     [userId, dispatch],
   );
-}
+};
 
-export function useCartNotification(
+export const useCartNotification = (
   notificationRef: React.MutableRefObject<undefined>,
-) {
+) => {
   const dispatch = useAppDispatch();
   const notification = useAppSelector(cartNotificationSelector);
   const isOpen = Boolean(notification);
@@ -110,7 +110,7 @@ export function useCartNotification(
 
   useEffect(
     () => setAnchorElement(notificationRef.current || null),
-    [setAnchorElement],
+    [notificationRef, setAnchorElement],
   );
 
   return {
@@ -119,4 +119,4 @@ export function useCartNotification(
     notification,
     closeNotification,
   };
-}
+};

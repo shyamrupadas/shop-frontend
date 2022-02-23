@@ -8,7 +8,7 @@ type ProductsItemProps = {
   children?: React.ReactNode;
 };
 
-const ProductsItem = ({ product, children }: ProductsItemProps) => {
+export const ProductsItem = ({ product, children }: ProductsItemProps) => {
   return (
     <div className={styles.wrapper}>
       <Card
@@ -61,5 +61,3 @@ const ProductsItem = ({ product, children }: ProductsItemProps) => {
     </div>
   );
 };
-
-export default ProductsItem;

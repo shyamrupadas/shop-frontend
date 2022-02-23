@@ -1,11 +1,11 @@
 import styles from './CategoryList.module.css';
 import { Divider, Stack } from '@mui/material';
-import ProductsList from 'entities/product/ui/ProductsList';
+import { ProductsList } from 'entities/product';
 import { useSelector } from 'react-redux';
-import categoriesSelector from '../model/categoriesSelectors';
-import { useWindowWidth } from 'shared/hooks/useWindowWidth';
+import { categoriesSelector } from '../model';
+import { useWindowWidth } from 'shared/hooks';
 
-const CategoryList = () => {
+export const CategoryList = () => {
   const categories = useSelector(categoriesSelector.categories);
   const rowItems = useWindowWidth();
 
@@ -23,5 +23,3 @@ const CategoryList = () => {
     </Stack>
   );
 };
-
-export default CategoryList;

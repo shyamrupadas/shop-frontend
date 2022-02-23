@@ -3,7 +3,7 @@ import { Cart, CartProductUpdate, UserId } from 'shared/types';
 
 const SERVER_URL = 'https://sbermarket-internship.herokuapp.com';
 
-export async function fetchCartByUserId(userId: UserId): Promise<Cart> {
+export const fetchCartByUserId = async (userId: UserId): Promise<Cart> => {
   try {
     const response = await axios.get<Cart>(`${SERVER_URL}/carts/${userId}`);
     return await response.data;
@@ -11,12 +11,12 @@ export async function fetchCartByUserId(userId: UserId): Promise<Cart> {
     console.log(error);
     throw error;
   }
-}
+};
 
-export async function updateCartByUserId(
+export const updateCartByUserId = async (
   userId: UserId,
   cartUpdateProducts: CartProductUpdate[],
-): Promise<Cart> {
+): Promise<Cart> => {
   try {
     const response = await axios.put<Cart>(`${SERVER_URL}/carts/${userId}`, {
       user: userId,
@@ -28,4 +28,4 @@ export async function updateCartByUserId(
     console.log(error);
     throw error;
   }
-}
+};
