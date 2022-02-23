@@ -33,6 +33,9 @@ const catalogSlice = createSlice({
   name: 'catalog',
   initialState,
   reducers: {
+    setCatalogInfo: (state, action: PayloadAction<CatalogState>) => {
+      state.catalogInfo = action.payload.catalogInfo;
+    },
     setCategoryId: (state, action: PayloadAction<string>) => {
       console.log(action.payload);
       state.catalogInfo.categoryId = action.payload;
@@ -92,5 +95,6 @@ const catalogSlice = createSlice({
   },
 });
 
-export const { setCategoryId, refreshCatalog } = catalogSlice.actions;
+export const { setCategoryId, refreshCatalog, setCatalogInfo } =
+  catalogSlice.actions;
 export const catalogReducer = catalogSlice.reducer;
