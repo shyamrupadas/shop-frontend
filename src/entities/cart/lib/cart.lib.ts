@@ -1,33 +1,28 @@
-import {
-  Cart,
-  CartProduct,
-  CartProductUpdate,
-  Product,
-} from 'shared/types';
+import { Cart, CartProduct, CartProductUpdate, Product } from 'shared/types';
 
-function getProductsCount(cart: Cart): number {
+const getProductsCount = (cart: Cart): number => {
   return cart.products.reduce(
     (productsCount: number, cartProduct: CartProduct) => {
       return (productsCount += cartProduct.count);
     },
     0,
   );
-}
+};
 
-function getTotal(cart: Cart): number {
+const getTotal = (cart: Cart): number => {
   return cart.products.reduce((total: number, cartProduct: CartProduct) => {
     return (total += cartProduct.count * cartProduct.product.price);
   }, 0);
-}
+};
 
-function setTotalAndProductsCount(cart: Cart): Cart {
+const setTotalAndProductsCount = (cart: Cart): Cart => {
   cart.productsCount = getProductsCount(cart);
   cart.total = getTotal(cart);
 
   return cart;
-}
+};
 
-export function addProductToCart(cart: Cart, product: Product): Cart {
+export const addProductToCart = (cart: Cart, product: Product): Cart => {
   const newCartProduct: CartProduct = {
     count: 1,
     product,
@@ -36,18 +31,18 @@ export function addProductToCart(cart: Cart, product: Product): Cart {
   cart.products.push(newCartProduct);
 
   return setTotalAndProductsCount(cart);
-}
+};
 
-export function findCartProductIndex(cart: Cart, product: Product): number {
+export const findCartProductIndex = (cart: Cart, product: Product): number => {
   return cart.products.findIndex((cartProduct) => {
     return cartProduct.product._id === product._id;
   });
-}
+};
 
-export function findCartProduct(
+export const findCartProduct = (
   cart: Cart,
   product: Product,
-): CartProduct | null {
+): CartProduct | null => {
   const cartProductIndex = findCartProductIndex(cart, product);
 
   if (cartProductIndex === -1) {
@@ -55,9 +50,9 @@ export function findCartProduct(
   }
 
   return cart.products[cartProductIndex];
-}
+};
 
-export function increaseProduct(cart: Cart, product: Product): Cart {
+export const increaseProduct = (cart: Cart, product: Product): Cart => {
   const cartProduct = findCartProduct(cart, product);
 
   // Товара нет в корзине. Добавляем:
@@ -69,9 +64,9 @@ export function increaseProduct(cart: Cart, product: Product): Cart {
   cartProduct.count += 1;
 
   return setTotalAndProductsCount(cart);
-}
+};
 
-export function decreaseProduct(cart: Cart, product: Product): Cart {
+export const decreaseProduct = (cart: Cart, product: Product): Cart => {
   const cartProductIndex = findCartProductIndex(cart, product);
 
   // Товара нет в корзине, ничего не делаем:
@@ -88,12 +83,12 @@ export function decreaseProduct(cart: Cart, product: Product): Cart {
   }
 
   return setTotalAndProductsCount(cart);
-}
+};
 
-export function setProductCount(
+export const setProductCount = (
   cart: Cart,
   productUpdateData: CartProductUpdate,
-) {
+) => {
   const cartProduct = cart.products.find((cartProduct) => {
     return cartProduct.product._id === productUpdateData.product;
   });
@@ -103,4 +98,4 @@ export function setProductCount(
   }
 
   cartProduct.count = productUpdateData.count;
-}
+};

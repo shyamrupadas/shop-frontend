@@ -6,8 +6,8 @@ import { getStore } from 'store/store';
 import { default as CatalogPage } from 'pages-layout/catalog-page/ui/CatalogPage';
 import { catalogModel } from 'entities/catalog';
 import { getServerSideStore, useAppDispatch, useAppSelector } from 'store';
-import { useWindowWidth } from 'shared/hooks/useWindowWidth';
-import categoriesSelector from 'entities/category/model/categoriesSelectors';
+import { useWindowWidth } from 'shared/hooks';
+import { categoriesSelector } from 'entities/category/model';
 import { refreshCatalog, setCategoryId } from 'entities/catalog/model';
 
 export const getServerSideProps: GetServerSideProps = async (context) => {

@@ -1,6 +1,6 @@
 import { Box, Stack, Typography } from '@mui/material';
 import { Category } from 'shared/types';
-import ProductsItem from './ProductsItem';
+import { ProductsItem } from './ProductsItem';
 import { AddToCart } from 'features/add-to-cart';
 import Link from 'next/link';
 
@@ -9,7 +9,7 @@ type ProductsListProps = {
   rowItems: number;
 };
 
-const ProductsList = ({ category, rowItems }: ProductsListProps) => {
+export const ProductsList = ({ category, rowItems }: ProductsListProps) => {
   const renderingProducts = category.products.slice(0, rowItems);
 
   return (
@@ -37,5 +37,3 @@ const ProductsList = ({ category, rowItems }: ProductsListProps) => {
     </Box>
   );
 };
-
-export default ProductsList;

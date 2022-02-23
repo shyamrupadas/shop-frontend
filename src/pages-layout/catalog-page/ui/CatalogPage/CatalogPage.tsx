@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useMemo } from 'react';
 import { Box, Container, Typography } from '@mui/material';
-import ProductsItem from 'entities/product/ui/ProductsItem';
+import { ProductsItem } from 'entities/product';
 import { AddToCart } from 'features/add-to-cart';
 import { useAppDispatch, useAppSelector } from 'store';
 import { catalogModel } from 'entities/catalog';

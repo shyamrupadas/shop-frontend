@@ -17,7 +17,7 @@ const getInitialState = (): EntityState<Category> => {
   return categoriesEntityAdapter.getInitialState();
 };
 
-const categoriesSlice = createSlice({
+export const categoriesSlice = createSlice({
   name: 'categories',
   initialState: getInitialState(),
   reducers: {
@@ -34,4 +34,4 @@ const categoriesSlice = createSlice({
 
 export const { setCategories } = categoriesSlice.actions;
 
-export default categoriesSlice.reducer;
+export const categoriesReducer = categoriesSlice.reducer;
