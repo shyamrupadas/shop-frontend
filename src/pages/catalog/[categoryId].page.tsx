@@ -8,7 +8,7 @@ import { catalogModel } from 'entities/catalog';
 import { getServerSideStore, useAppDispatch, useAppSelector } from 'store';
 import { useWindowWidth } from 'shared/hooks/useWindowWidth';
 import categoriesSelector from 'entities/category/model/categoriesSelectors';
-import { refreshCatalog, setCategoryId } from 'entities/catalog/model';
+import { setCategoryId } from 'entities/catalog/model';
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const store = getStore();
@@ -48,7 +48,6 @@ const Catalog: NextPage = () => {
 
   useEffect(() => {
     if (categoryId !== catalog.categoryId || isRowsChanges) {
-      dispatch(refreshCatalog());
       dispatch(setCategoryId(categoryId));
     }
   }, [catalog.categoryId, categoryId, dispatch, isRowsChanges]);
