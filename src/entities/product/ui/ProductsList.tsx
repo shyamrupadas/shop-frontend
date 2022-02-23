@@ -8,7 +8,7 @@ type ProductsListProps = {
   children: React.ReactNode;
 };
 
-const ProductsList = ({ category, children }: ProductsListProps) => {
+export const ProductsList = ({ category, children }: ProductsListProps) => {
   const pathname = `/catalog/${category._id}`;
 
   return (
@@ -27,5 +27,3 @@ const ProductsList = ({ category, children }: ProductsListProps) => {
     </Box>
   );
 };
-
-export default ProductsList;

@@ -1,5 +1,5 @@
 import { AddToCart } from 'features/add-to-cart';
-import ProductsItem from '../../../../entities/product/ui/ProductsItem';
+import { ProductsItem } from 'entities/product';
 import React from 'react';
 import { catalogModel } from 'entities/catalog';
 import { Product } from 'shared/types';

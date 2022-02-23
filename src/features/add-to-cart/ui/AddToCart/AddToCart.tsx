@@ -9,7 +9,7 @@ type AddToCartProps = {
   product: Product;
 };
 
-export function AddToCart({ product }: AddToCartProps) {
+export const AddToCart = ({ product }: AddToCartProps) => {
   const {
     productCount,
     handleDecrementClick,
@@ -69,4 +69,4 @@ export function AddToCart({ product }: AddToCartProps) {
       </IconButton>
     </ButtonGroup>
   );
-}
+};

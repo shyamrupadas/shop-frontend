@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { catalogApi } from 'shared/api/catalog';
-import { CategoryId, PaginationWrapper, Product, UserId } from 'shared/types';
+import { CategoryId, PaginationWrapper, Product } from 'shared/types';
 
 type ProductsWithPaginationArgs = {
   categoryId: CategoryId;

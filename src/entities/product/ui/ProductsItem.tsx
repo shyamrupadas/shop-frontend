@@ -9,7 +9,7 @@ type ProductsItemProps = {
   onClick: () => void;
 };
 
-const ProductsItem = ({ product, children, onClick }: ProductsItemProps) => {
+export const ProductsItem = ({ product, children, onClick }: ProductsItemProps) => {
   return (
     <div className={styles.wrapper}>
       <Card
@@ -64,5 +64,3 @@ const ProductsItem = ({ product, children, onClick }: ProductsItemProps) => {
     </div>
   );
 };
-
-export default ProductsItem;

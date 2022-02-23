@@ -1,13 +1,13 @@
 import React from 'react';
 import { Container, Divider, Stack } from '@mui/material';
 import { useSelector } from 'react-redux';
-import categoriesSelector from '../entities/category/model/categoriesSelectors';
+import { categoryModel } from 'entities/category';
 import { useWindowWidth } from 'shared/hooks';
-import ProductsList from '../entities/product/ui/ProductsList';
+import { ProductsList } from 'entities/product';
 import { ProductCard } from 'widgets/product-card';
 
 const HomePage = () => {
-  const categories = useSelector(categoriesSelector.categories);
+  const categories = useSelector(categoryModel.categoriesSelector.categories);
   const rowItems = useWindowWidth();
 
   return (

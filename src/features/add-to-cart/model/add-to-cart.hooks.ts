@@ -3,7 +3,7 @@ import { Product } from 'shared/types';
 import { cartModel } from 'entities/cart';
 import { useAppDispatch } from 'store/store';
 
-export function useAddToCart(product: Product) {
+export const useAddToCart = (product: Product) => {
   const dispatch = useAppDispatch();
   const productCount = cartModel.hooks.useCartProductCountSelector(product._id);
   const cartProduct = cartModel.hooks.useCartProductSelector(product._id);
@@ -26,4 +26,4 @@ export function useAddToCart(product: Product) {
     handleIncrementClick,
     isMaxCount,
   };
-}
+};
