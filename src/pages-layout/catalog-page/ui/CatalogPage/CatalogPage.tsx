@@ -71,7 +71,7 @@ const CatalogPage = ({ name, rowItemsNumber }: CatalogPageProps) => {
   }, [status, categoryId, dispatch, rowItemsNumber, columnItemsNumber]);
 
   return (
-    <Container maxWidth="lg">
+    <Container maxWidth="lg" sx={{ marginTop: '32px', marginBottom: '32px' }}>
       <Typography gutterBottom variant="h4" component="h2">
         {name}
       </Typography>
