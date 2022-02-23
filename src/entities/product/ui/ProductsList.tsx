@@ -17,7 +17,6 @@ const ProductsList = ({ category, rowItems }: ProductsListProps) => {
       <Link
         href={{
           pathname: `/catalog/${category._id}`,
-          query: { name: category.name },
         }}
       >
         <a>

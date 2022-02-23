@@ -1,10 +1,11 @@
 import { Product } from 'shared/types';
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { loadProductsWithPagination } from './catalog.thunks';
 import { convertPageToRows } from './convertPageToRows';
 
 type CatalogState = {
   catalogInfo: {
+    categoryId: string | null;
     length: number;
     page: number;
     limit: number;
@@ -17,6 +18,7 @@ type CatalogState = {
 
 const initialState: CatalogState = {
   catalogInfo: {
+    categoryId: null,
     length: 0,
     page: 0,
     limit: 0,
@@ -30,7 +32,24 @@ const initialState: CatalogState = {
 const catalogSlice = createSlice({
   name: 'catalog',
   initialState,
-  reducers: {},
+  reducers: {
+    setCategoryId: (state, action: PayloadAction<string>) => {
+      console.log(action.payload);
+      state.catalogInfo.categoryId = action.payload;
+    },
+    refreshCatalog: (state) => {
+      state.catalogInfo = {
+        categoryId: null,
+        length: 0,
+        page: 0,
+        limit: 0,
+        lastPage: 0,
+        columnItemsNumber: 4,
+        rows: {},
+        status: 'idle',
+      };
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(
       loadProductsWithPagination.pending,
@@ -50,6 +69,7 @@ const catalogSlice = createSlice({
         });
 
         state.catalogInfo = {
+          categoryId: state.catalogInfo.categoryId,
           length: action.payload.length,
           page: action.payload.page,
           limit: action.payload.limit,
@@ -72,5 +92,5 @@ const catalogSlice = createSlice({
   },
 });
 
-export const { actions } = catalogSlice;
+export const { setCategoryId, refreshCatalog } = catalogSlice.actions;
 export const catalogReducer = catalogSlice.reducer;
