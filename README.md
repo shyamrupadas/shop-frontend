@@ -12,6 +12,7 @@ https://github.com/shyamrupadas
 ## Используемые технологии
 
 Javascript, Typescript, React.js, Next.js, Redux Toolkit, React Virtualized, Axios <br>
+Архитектурная методология: Feature-Sliced Design <br>
 Стили: Material-UI <br>
 Код-стайл: ESLint, Prettier
 
