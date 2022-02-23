@@ -10,19 +10,17 @@ const CategoryList = () => {
   const rowItems = useWindowWidth();
 
   return (
-    <div className={styles.wrapper}>
-      <Stack spacing={2} divider={<Divider flexItem />}>
-        {categories.map((category) => {
-          return (
-            <ProductsList
-              key={category._id}
-              category={category}
-              rowItems={rowItems}
-            />
-          );
-        })}
-      </Stack>
-    </div>
+    <Stack spacing={2} mt="32px" mb="32px" divider={<Divider flexItem />}>
+      {categories.map((category) => {
+        return (
+          <ProductsList
+            key={category._id}
+            category={category}
+            rowItems={rowItems}
+          />
+        );
+      })}
+    </Stack>
   );
 };
 
