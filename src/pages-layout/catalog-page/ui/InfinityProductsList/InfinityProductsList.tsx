@@ -9,7 +9,7 @@ import { Grid, Stack, Typography } from '@mui/material';
 import { Product } from 'shared/types';
 import { useAppSelector } from 'store';
 import { catalogModel } from 'entities/catalog';
-import { isServer } from 'shared/lib';
+import { isBrowser, isServer } from 'shared/lib';
 import { ListRowRenderer } from 'react-virtualized/dist/es/List';
 
 type InfinityProductsListProps = {
@@ -100,23 +100,28 @@ const InfinityProductsList = ({
             minimumBatchSize={4}
           >
             {({ onRowsRendered, registerChild }) => (
-              <WindowScroller>
-                {({ height, scrollTop }) => (
-                  <List
-                    autoHeight
-                    overscanRowCount={4}
-                    className={'InfinityProductsList'}
-                    scrollTop={scrollTop}
-                    ref={registerChild}
-                    height={isServer ? ssrListHeight : height}
-                    width={isServer ? ssrListWidth : rowWidth}
-                    rowCount={isServer ? ssrRowsCount : rowsCount}
-                    rowHeight={itemHeight}
-                    onRowsRendered={onRowsRendered}
-                    rowRenderer={rowRenderer}
-                    noRowsRenderer={noRowsRenderer}
-                  />
-                )}
+              <WindowScroller ref={registerChild}>
+                {({ height, scrollTop, registerChild }) => {
+                  if (isBrowser) {
+                    registerChild(document.body);
+                  }
+
+                  return (
+                    <List
+                      autoHeight
+                      overscanRowCount={4}
+                      className={'InfinityProductsList'}
+                      scrollTop={scrollTop}
+                      height={isServer ? ssrListHeight : height}
+                      width={isServer ? ssrListWidth : rowWidth}
+                      rowCount={isServer ? ssrRowsCount : rowsCount}
+                      rowHeight={itemHeight}
+                      onRowsRendered={onRowsRendered}
+                      rowRenderer={rowRenderer}
+                      noRowsRenderer={noRowsRenderer}
+                    />
+                  );
+                }}
               </WindowScroller>
             )}
           </InfiniteLoader>
