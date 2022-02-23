@@ -41,6 +41,7 @@ const Catalog: NextPage = () => {
     typeof router.query.categoryId === 'string' ? router.query.categoryId : '';
 
   const catalog = useAppSelector(catalogModel.selectors.catalog);
+
   const rowItemsNumber = useWindowWidth();
   const isRowsChanges =
     catalog.limit / rowItemsNumber !== catalog.columnItemsNumber;

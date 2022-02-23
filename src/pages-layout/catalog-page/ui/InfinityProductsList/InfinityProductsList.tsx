@@ -4,17 +4,13 @@ import {
   List,
   WindowScroller,
 } from 'react-virtualized';
-import React, { Fragment, useRef } from 'react';
+import React, { Fragment, useCallback } from 'react';
 import { Grid, Stack, Typography } from '@mui/material';
 import { Product } from 'shared/types';
 import { useAppSelector } from 'store';
 import { catalogModel } from 'entities/catalog';
-
-const noRowsRenderer = () => (
-  <Grid item>
-    <Typography>No products found</Typography>
-  </Grid>
-);
+import { isBrowser, isServer } from 'shared/lib';
+import { ListRowRenderer } from 'react-virtualized/dist/es/List';
 
 type InfinityProductsListProps = {
   children: (item: Product, key: string) => React.ReactNode;
@@ -22,85 +18,110 @@ type InfinityProductsListProps = {
   hasMore?: boolean;
   isFetching?: boolean;
   fetchItems?: Function;
-  itemWidth?: number;
-  itemHeight?: number;
+  itemWidth: number;
+  itemHeight: number;
   rowsCount: number;
+  ssrListWidth: number;
+  ssrListHeight: number;
+  ssrRowsCount: number;
 };
+
+type IsRowLoadedArgs = {
+  index: number;
+};
+
+const noRowsRenderer = () => (
+  <Grid item>
+    <Typography>No products found</Typography>
+  </Grid>
+);
 
 const InfinityProductsList = ({
   isFetching,
   fetchItems = () => {},
   hasMore = false,
-  itemWidth = 200,
-  itemHeight = 410,
+  itemWidth,
+  itemHeight,
   rows = {},
   children,
   rowsCount,
+  ssrListWidth,
+  ssrRowsCount,
+  ssrListHeight,
 }: InfinityProductsListProps) => {
-  const infiniteLoaderRef = useRef<InfiniteLoader>(null);
   const catalog = useAppSelector(catalogModel.selectors.catalog);
   const page = catalog.page;
+  // TODO: В сторе не обновляется кол-во элементов в строке
   const columnItemsNumber = catalog.columnItemsNumber;
 
-  const loadMoreRows = async () => {
+  const loadMoreRows = useCallback(async () => {
     if (!isFetching) {
       fetchItems();
     }
-  };
+  }, [isFetching, fetchItems]);
+
+  const isRowLoaded = useCallback(
+    ({ index }: IsRowLoadedArgs) => rows.hasOwnProperty(index),
+    [rows],
+  );
+
+  const rowRenderer: ListRowRenderer = useCallback(
+    ({ index, style, key }) => {
+      // TODO: тут периодически валят undefined, возможно отрегулировать?
+      //  сейчас InfiniteLoader хочет загружать по 13 рядов вниз от верхнего
+      const productsInRow = rows[index] ? rows[index] : [];
+
+      return (
+        <Stack
+          direction="row"
+          justifyContent="center"
+          spacing={5}
+          style={style}
+          key={key}
+        >
+          {productsInRow.map((product, itemIndex) => (
+            <Fragment key={product._id}>{children(product, key)}</Fragment>
+          ))}
+        </Stack>
+      );
+    },
+    [rows, children],
+  );
 
   return (
     <AutoSizer disableHeight>
       {({ width: rowWidth }) => {
         return (
           <InfiniteLoader
-            ref={infiniteLoaderRef}
             rowCount={rowsCount}
-            isRowLoaded={({ index }) => {
-              // TODO: !!!!!!!!!
-              return index + columnItemsNumber < page * columnItemsNumber;
-            }}
+            isRowLoaded={isRowLoaded}
             loadMoreRows={loadMoreRows}
-            threshold={1}
-            minimumBatchSize={3}
+            threshold={4}
+            minimumBatchSize={4}
           >
             {({ onRowsRendered, registerChild }) => (
-              <WindowScroller>
-                {({ height, scrollTop }) => (
-                  <List
-                    className={'InfinityProductsList'}
-                    autoHeight
-                    ref={registerChild}
-                    height={height}
-                    scrollTop={scrollTop}
-                    width={rowWidth}
-                    rowCount={rowsCount}
-                    rowHeight={itemHeight}
-                    onRowsRendered={onRowsRendered}
-                    rowRenderer={({ index, style, key }) => {
-                      console.log(index, rows[index]);
-                      // тут периодически валят undefined, возможно отрегулировать?
-                      // сейчас InfiniteLoader хочет загружать по 13 рядов вниз от верхнего
-                      const productsInRow = rows[index] ? rows[index] : [];
+              <WindowScroller ref={registerChild}>
+                {({ height, scrollTop, registerChild }) => {
+                  if (isBrowser) {
+                    registerChild(document.body);
+                  }
 
-                      return (
-                        <Stack
-                          direction="row"
-                          justifyContent="center"
-                          spacing={5}
-                          style={style}
-                          key={key}
-                        >
-                          {productsInRow.map((product, itemIndex) => (
-                            <Fragment key={product._id}>
-                              {children(product, key)}
-                            </Fragment>
-                          ))}
-                        </Stack>
-                      );
-                    }}
-                    noRowsRenderer={noRowsRenderer}
-                  />
-                )}
+                  return (
+                    <List
+                      autoHeight
+                      overscanRowCount={4}
+                      className={'InfinityProductsList'}
+                      scrollTop={scrollTop}
+                      height={isServer ? ssrListHeight : height}
+                      width={isServer ? ssrListWidth : rowWidth}
+                      rowCount={isServer ? ssrRowsCount : rowsCount}
+                      rowHeight={itemHeight}
+                      onRowsRendered={onRowsRendered}
+                      rowRenderer={rowRenderer}
+                      noRowsRenderer={noRowsRenderer}
+                    />
+                  );
+                }}
               </WindowScroller>
             )}
           </InfiniteLoader>
