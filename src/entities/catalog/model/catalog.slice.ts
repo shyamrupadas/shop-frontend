@@ -36,7 +36,6 @@ const catalogSlice = createSlice({
   initialState,
   reducers: {
     setCategoryId: (state, action: PayloadAction<string>) => {
-      console.log(action.payload);
       state.catalogInfo.categoryId = action.payload;
     },
     refreshCatalog: (state) => {
