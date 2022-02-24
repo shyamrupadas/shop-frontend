@@ -1,4 +1,4 @@
-import { PaginationWrapper, Product } from 'shared/types/types';
+import { PaginationWrapper, Product } from 'shared/types';
 import { axiosInstance } from '../axiosInstance';
 
 type GetProductsResponse = PaginationWrapper<Product[]>;

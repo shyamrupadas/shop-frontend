@@ -1,3 +1,3 @@
 export * from './categoriesSlice';
 export * as thunks from './categoriesThunk';
-export { categoriesSelector } from './categoriesSelectors';
+export * as selectors from './categoriesSelectors';

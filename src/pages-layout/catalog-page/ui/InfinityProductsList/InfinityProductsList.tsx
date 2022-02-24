@@ -7,8 +7,6 @@ import {
 import React, { Fragment, useCallback } from 'react';
 import { Grid, Stack, Typography } from '@mui/material';
 import { Product } from 'shared/types';
-import { useAppSelector } from 'store';
-import { catalogModel } from 'entities/catalog';
 import { isBrowser, isServer } from 'shared/lib';
 import { ListRowRenderer } from 'react-virtualized/dist/es/List';
 
@@ -49,8 +47,6 @@ const InfinityProductsList = ({
   ssrRowsCount,
   ssrListHeight,
 }: InfinityProductsListProps) => {
-  const catalog = useAppSelector(catalogModel.selectors.catalog);
-
   const loadMoreRows = useCallback(async () => {
     if (!isFetching) {
       fetchItems();
@@ -64,8 +60,6 @@ const InfinityProductsList = ({
 
   const rowRenderer: ListRowRenderer = useCallback(
     ({ index, style, key }) => {
-      // TODO: тут периодически валят undefined, возможно отрегулировать?
-      //  сейчас InfiniteLoader хочет загружать по 13 рядов вниз от верхнего
       const productsInRow = rows[index] ? rows[index] : [];
 
       return (

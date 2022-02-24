@@ -1,8 +1,6 @@
 import { cartModel } from 'entities/cart';
-// import { openedProduct as openedProductSelector } from 'entities/catalog/model/catalog.selectors';
-import { useAppDispatch, useAppSelector } from 'store';
+import { useAppSelector } from 'store';
 import { ProductCard } from 'entities/product';
-import { useCallback } from 'react';
 import { catalogModel } from 'entities/catalog';
 import { AddToCart } from 'features/add-to-cart';
 

@@ -10,14 +10,10 @@ export const debounce = (
   debounceCartThunk: AsyncThunk<Cart, string, { state: RootState }>,
 ) => {
   if (debounceTimer) {
-    console.log('debounce working already');
     return;
   }
 
-  console.log('debounce start');
-
   debounceTimer = setTimeout(() => {
-    console.log('debounce stop, send request');
     dispatch(debounceCartThunk(userId));
     debounceTimer = null;
   }, 2000);
