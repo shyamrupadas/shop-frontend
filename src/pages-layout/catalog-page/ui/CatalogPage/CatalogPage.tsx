@@ -1,78 +1,40 @@
-import React, { useCallback, useEffect, useMemo } from 'react';
+import React, { useEffect } from 'react';
 import { Box, Container, Typography } from '@mui/material';
-import { useAppDispatch, useAppSelector } from 'store';
-import { catalogModel } from 'entities/catalog';
 import { useRouter } from 'next/router';
 import InfinityProductsList from '../InfinityProductsList';
 import { ProductCard } from 'widgets/product-card';
-
-type CatalogPageProps = {
-  name: string;
-  rowItemsNumber: number;
-};
+import {
+  useInfinityProductsLoader,
+  useUpdateCatalogAfterReset,
+} from '../../model/catalog-page.hooks';
+import { useAppDispatch, useAppSelector } from '../../../../store';
+import { useWindowWidth } from '../../../../shared/hooks';
+import { refreshCatalog } from '../../../../entities/catalog/model';
+import { categoriesSelector } from '../../../../entities/category/model';
+import { catalogModel } from 'entities/catalog';
 
 const ITEM_HEIGHT = 410;
 const ITEM_WIDTH = 200;
 const SSR_ROWS_COUNT = 4;
 
-/**
- * TODO: Слишком много всего в компоненте. Лучше вынести логику в хуки
- */
-const CatalogPage = ({ name, rowItemsNumber }: CatalogPageProps) => {
+const CatalogPage = () => {
   const router = useRouter();
-  const { categoryId } = router.query;
-  const dispatch = useAppDispatch();
+  const { categoryId: _categoryId } = router.query;
+  const categoryId = typeof _categoryId === 'string' ? _categoryId : '';
+  const category = useAppSelector((state) =>
+    categoriesSelector.categoryById(state, categoryId),
+  );
 
-  const catalog = useAppSelector(catalogModel.selectors.catalog);
-  const catalogLength = catalog.length;
-  const columnItemsNumber = catalog.columnItemsNumber;
-  const status = useAppSelector(catalogModel.selectors.status);
-  const currentPage = useAppSelector(catalogModel.selectors.currentPage);
-  const rows = catalog.rows;
+  useUpdateCatalogAfterReset(categoryId);
+  const { rows, hasNextPage, isLoading, fetchNextPage, rowsCount, maxRows } =
+    useInfinityProductsLoader(categoryId);
 
-  const productsCount = useMemo(() => {
-    return Object.values(rows).reduce((count, row) => row.length + count, 0);
-  }, [rows]);
-
-  const rowsCount = Math.ceil(productsCount / rowItemsNumber) + 4;
-  const maxRows = Math.ceil(catalog.length / rowItemsNumber);
-  const hasNextPage = currentPage < catalog.lastPage;
-
-  const isLoading = status === 'pending';
-  const fetchNextPage = useCallback(() => {
-    if (typeof categoryId !== 'string') {
-      return;
-    }
-
-    dispatch(
-      catalogModel.thunks.loadProductsWithPagination({
-        categoryId,
-        page: currentPage + 1,
-        limit: rowItemsNumber * columnItemsNumber,
-      }),
-    );
-  }, [categoryId, columnItemsNumber, currentPage, dispatch, rowItemsNumber]);
-
-  useEffect(() => {
-    if (typeof categoryId !== 'string') {
-      return;
-    }
-
-    if (status === 'idle') {
-      dispatch(
-        catalogModel.thunks.loadProductsWithPagination({
-          categoryId,
-          page: 1,
-          limit: rowItemsNumber * columnItemsNumber,
-        }),
-      );
-    }
-  }, [status, categoryId, dispatch, rowItemsNumber, columnItemsNumber]);
+  const categoryName = category?.name ?? '';
 
   return (
     <Container maxWidth="lg" sx={{ marginTop: '32px', marginBottom: '32px' }}>
       <Typography gutterBottom variant="h4" component="h2">
-        {name}
+        {categoryName}
       </Typography>
 
       <InfinityProductsList
