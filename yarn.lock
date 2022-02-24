@@ -195,6 +195,11 @@
   resolved "https://registry.yarnpkg.com/@humanwhocodes/object-schema/-/object-schema-1.2.1.tgz#b520529ec21d8e5945a1851dfd1c32e94e39ff45"
   integrity sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==
 
+"@martinstark/throttle-ts@^1.3.0":
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/@martinstark/throttle-ts/-/throttle-ts-1.3.0.tgz#12a4f0dc5670a5760dc86ddb38053e14668e9bfe"
+  integrity sha512-eceJbltJzllTiwjjI3yNtdiVBp2Oav+P42fgAn7+ltj/N0VPnJtgrK/hobRg7XGar9b0HgwRsPJlOUCGaYvaIw==
+
 "@mui/base@5.0.0-alpha.68":
   version "5.0.0-alpha.68"
   resolved "https://registry.yarnpkg.com/@mui/base/-/base-5.0.0-alpha.68.tgz#d93d77e662bc8dce47c9415fc6cbcac6658efab7"

@@ -47,7 +47,7 @@ const Catalog: NextPage = () => {
     catalog.limit / rowItemsNumber !== catalog.columnItemsNumber;
 
   useEffect(() => {
-    if (categoryId !== catalog.categoryId || isRowsChanges) {
+    if (isRowsChanges) {
       dispatch(refreshCatalog());
       dispatch(setCategoryId(categoryId));
     }

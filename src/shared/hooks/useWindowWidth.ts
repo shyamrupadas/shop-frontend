@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { throttle } from '@martinstark/throttle-ts';
 
 export const useWindowWidth = () => {
   let innerWidth: number;
@@ -12,8 +13,10 @@ export const useWindowWidth = () => {
 
   useEffect(() => {
     const handelResize = () => setWidth(window.innerWidth);
-    window.addEventListener('resize', handelResize);
-    return () => window.removeEventListener('resize', handelResize);
+    const [throttledHandelResize] = throttle(handelResize, 200);
+
+    window.addEventListener('resize', throttledHandelResize);
+    return () => window.removeEventListener('resize', throttledHandelResize);
   }, []);
 
   if (width > 1200) {

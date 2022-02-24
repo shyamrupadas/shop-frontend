@@ -50,9 +50,6 @@ const InfinityProductsList = ({
   ssrListHeight,
 }: InfinityProductsListProps) => {
   const catalog = useAppSelector(catalogModel.selectors.catalog);
-  const page = catalog.page;
-  // TODO: В сторе не обновляется кол-во элементов в строке
-  const columnItemsNumber = catalog.columnItemsNumber;
 
   const loadMoreRows = useCallback(async () => {
     if (!isFetching) {
@@ -102,12 +99,13 @@ const InfinityProductsList = ({
             {({ onRowsRendered, registerChild }) => (
               <WindowScroller ref={registerChild}>
                 {({ height, scrollTop, registerChild }) => {
-                  if (isBrowser) {
-                    registerChild(document.body);
-                  }
-
                   return (
                     <List
+                      ref={() => {
+                        if (isBrowser) {
+                          registerChild(document.body);
+                        }
+                      }}
                       autoHeight
                       overscanRowCount={4}
                       className={'InfinityProductsList'}

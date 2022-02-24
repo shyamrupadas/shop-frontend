@@ -50,6 +50,12 @@ const catalogSlice = createSlice({
         status: 'idle',
       };
     },
+    setCatalogInfo: (
+      state: CatalogState,
+      action: PayloadAction<CatalogState>,
+    ) => {
+      state.catalogInfo = action.payload.catalogInfo;
+    },
     openProduct: (state, action: PayloadAction<Product>) => {
       state.openedProduct = action.payload;
     },
@@ -99,6 +105,11 @@ const catalogSlice = createSlice({
   },
 });
 
-export const { setCategoryId, refreshCatalog, openProduct, closeProduct } =
-  catalogSlice.actions;
+export const {
+  setCategoryId,
+  refreshCatalog,
+  openProduct,
+  closeProduct,
+  setCatalogInfo,
+} = catalogSlice.actions;
 export const catalogReducer = catalogSlice.reducer;
