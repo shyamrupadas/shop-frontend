@@ -60,8 +60,6 @@ const InfinityProductsList = ({
 
   const rowRenderer: ListRowRenderer = useCallback(
     ({ index, style, key }) => {
-      // TODO: тут периодически валят undefined, возможно отрегулировать?
-      //  сейчас InfiniteLoader хочет загружать по 13 рядов вниз от верхнего
       const productsInRow = rows[index] ? rows[index] : [];
 
       return (
