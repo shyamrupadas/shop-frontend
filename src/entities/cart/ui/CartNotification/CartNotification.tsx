@@ -6,7 +6,9 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
-import React from 'react';
+import { cartModel } from 'entities/cart';
+import React, { useEffect } from 'react';
+import { useAppDispatch } from 'store';
 
 type CartNotificationType = {
   children: React.ReactNode;
@@ -21,6 +23,19 @@ export const CartNotification = ({
   anchorElement,
   onClose,
 }: CartNotificationType) => {
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    const timerId = setTimeout(() => {
+      dispatch(cartModel.actions.resetNotification());
+    }, 2000);
+    return () => {
+      if (timerId) {
+        clearTimeout(timerId);
+      }
+    };
+  }, [dispatch]);
+
   return (
     <Popover
       open={isOpen}
