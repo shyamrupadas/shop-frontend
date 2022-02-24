@@ -33,8 +33,12 @@ export const AddToCart = ({ product }: AddToCartProps) => {
     [handleDecrementClick],
   );
 
+  const handleEventPropagation = useCallback((event) => {
+    event.stopPropagation();
+  }, []);
+
   return (
-    <ButtonGroup aria-label="outlined primary button group">
+    <ButtonGroup aria-label="outlined primary button group" onClick={handleEventPropagation}>
       <IconButton
         color="primary"
         onClick={_handleDecrementClick}
