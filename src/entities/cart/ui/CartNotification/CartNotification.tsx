@@ -2,7 +2,7 @@ import {
   Box,
   Card,
   CardContent,
-  Popover,
+  Popper,
   Stack,
   Typography,
 } from '@mui/material';
@@ -14,14 +14,12 @@ type CartNotificationType = {
   children: React.ReactNode;
   isOpen: boolean;
   anchorElement: HTMLElement;
-  onClose: () => void;
 };
 
 export const CartNotification = ({
   children,
   isOpen,
   anchorElement,
-  onClose,
 }: CartNotificationType) => {
   const dispatch = useAppDispatch();
 
@@ -37,23 +35,16 @@ export const CartNotification = ({
   }, [dispatch]);
 
   return (
-    <Popover
+    <Popper
+      style={{ zIndex: 10000 }}
       open={isOpen}
       anchorEl={anchorElement}
-      onClose={onClose}
-      anchorOrigin={{
-        vertical: 'bottom',
-        horizontal: 'right',
-      }}
-      transformOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
-      }}
+      placement="bottom-end"
     >
       <Card>
         <CardContent>{children}</CardContent>
       </Card>
-    </Popover>
+    </Popper>
   );
 };
 

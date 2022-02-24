@@ -16,8 +16,7 @@ export const SmallCartButton = () => {
     cartModel.selectors.overstockedProducts,
   );
 
-  const { isOpen, anchorElement, notification, closeNotification } =
-    cartModel.hooks.useCartNotification(boxRef);
+  const { isOpen, anchorElement } = cartModel.hooks.useCartNotification(boxRef);
 
   return (
     <Box ref={boxRef}>
@@ -30,11 +29,7 @@ export const SmallCartButton = () => {
       </Link>
 
       {anchorElement && isOpen && (
-        <CartNotification
-          isOpen={isOpen}
-          onClose={closeNotification}
-          anchorElement={anchorElement}
-        >
+        <CartNotification isOpen={isOpen} anchorElement={anchorElement}>
           <CartNotification.Title>
             Ваша корзина обновлена с учетом наличия товаров на складе:
           </CartNotification.Title>
