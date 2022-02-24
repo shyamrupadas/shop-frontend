@@ -1,9 +1,7 @@
-import axios from 'axios';
 import { Category, PaginationWrapper } from 'shared/types/types';
+import { axiosInstance } from '../axiosInstance';
 
 type GetCategoriesResponse = PaginationWrapper<Category[]>;
-
-const SERVER_URL = 'https://sbermarket-internship.herokuapp.com';
 
 export const getCategories = async (
   page = 1,
@@ -11,8 +9,8 @@ export const getCategories = async (
   productsLimit = 5,
 ): Promise<Category[]> => {
   try {
-    const res = await axios.get<GetCategoriesResponse>(
-      `${SERVER_URL}/categories?page=${page}&limit=${limit}&productsLimit=${productsLimit}`,
+    const res = await axiosInstance.get<GetCategoriesResponse>(
+      `/categories?page=${page}&limit=${limit}&productsLimit=${productsLimit}`,
     );
     const categories: Category[] = res.data.data;
     return categories;

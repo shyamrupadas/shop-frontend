@@ -1,11 +1,9 @@
-import axios from 'axios';
 import { Cart, CartProductUpdate, UserId } from 'shared/types';
-
-const SERVER_URL = 'https://sbermarket-internship.herokuapp.com';
+import { axiosInstance } from '../axiosInstance';
 
 export const fetchCartByUserId = async (userId: UserId): Promise<Cart> => {
   try {
-    const response = await axios.get<Cart>(`${SERVER_URL}/carts/${userId}`);
+    const response = await axiosInstance.get<Cart>(`/carts/${userId}`);
     return await response.data;
   } catch (error) {
     console.log(error);
@@ -18,7 +16,7 @@ export const updateCartByUserId = async (
   cartUpdateProducts: CartProductUpdate[],
 ): Promise<Cart> => {
   try {
-    const response = await axios.put<Cart>(`${SERVER_URL}/carts/${userId}`, {
+    const response = await axiosInstance.put<Cart>(`/carts/${userId}`, {
       user: userId,
       products: cartUpdateProducts,
     });
