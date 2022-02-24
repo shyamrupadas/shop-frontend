@@ -1,17 +1,14 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Box, Container, Typography } from '@mui/material';
 import { useRouter } from 'next/router';
 import InfinityProductsList from '../InfinityProductsList';
 import { ProductCard } from 'widgets/product-card';
+import { useAppSelector } from 'store';
+import { categoryModel } from 'entities/category';
 import {
   useInfinityProductsLoader,
   useUpdateCatalogAfterReset,
 } from '../../model/catalog-page.hooks';
-import { useAppDispatch, useAppSelector } from '../../../../store';
-import { useWindowWidth } from '../../../../shared/hooks';
-import { refreshCatalog } from '../../../../entities/catalog/model';
-import { categoriesSelector } from '../../../../entities/category/model';
-import { catalogModel } from 'entities/catalog';
 
 const ITEM_HEIGHT = 410;
 const ITEM_WIDTH = 200;
@@ -22,7 +19,7 @@ const CatalogPage = () => {
   const { categoryId: _categoryId } = router.query;
   const categoryId = typeof _categoryId === 'string' ? _categoryId : '';
   const category = useAppSelector((state) =>
-    categoriesSelector.categoryById(state, categoryId),
+    categoryModel.selectors.categoryById(state, categoryId),
   );
 
   useUpdateCatalogAfterReset(categoryId);

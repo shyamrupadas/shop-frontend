@@ -10,13 +10,13 @@ import {
 import { useMemo } from 'react';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import type { ThunkMiddleware } from 'redux-thunk';
-import { categoriesReducer } from 'entities/category/model';
+import { categoryModel } from 'entities/category';
 import { userModel } from 'entities/user';
 import { cartModel } from 'entities/cart';
 import { catalogModel } from 'entities/catalog';
 
 const rootReducer = {
-  categories: categoriesReducer,
+  categories: categoryModel.categoriesReducer,
   user: userModel.userReducer,
   cart: cartModel.cartReducer,
   catalog: catalogModel.catalogReducer,

@@ -11,8 +11,4 @@ const {
   (state: RootState): EntityState<Category> => state.categories,
 );
 
-export const categoriesSelector = {
-  categoriesIds,
-  categoryById,
-  categories,
-};
+export { categoriesIds, categoryById, categories };

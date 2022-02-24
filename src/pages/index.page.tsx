@@ -1,5 +1,5 @@
 import type { NextPage } from 'next';
-import HomePage from '../pages-layout/HomePage';
+import HomePage from 'pages-layout/HomePage';
 import MainLayout from './MainLayout';
 import { getServerSideStore } from 'store';
 

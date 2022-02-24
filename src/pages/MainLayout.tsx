@@ -3,7 +3,7 @@ import Head from 'next/head';
 import { Header } from 'widgets/header';
 import { Footer } from 'widgets/footer';
 import style from './MainLayout.module.css';
-import { ProductModal } from '../widgets/product-modal';
+import { ProductModal } from 'widgets/product-modal';
 
 const MainLayout = ({
   children,

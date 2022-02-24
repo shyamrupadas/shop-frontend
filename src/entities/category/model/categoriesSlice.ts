@@ -6,7 +6,7 @@ import {
   PayloadAction,
 } from '@reduxjs/toolkit';
 import { Category } from 'shared/types/types';
-import getCategoriesThunk from './categoriesThunk';
+import { getCategoriesThunk } from './categoriesThunk';
 
 export const categoriesEntityAdapter: EntityAdapter<Category> =
   createEntityAdapter({

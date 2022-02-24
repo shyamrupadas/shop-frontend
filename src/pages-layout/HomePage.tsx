@@ -7,7 +7,7 @@ import { ProductsList } from 'entities/product';
 import { ProductCard } from 'widgets/product-card';
 
 const HomePage = () => {
-  const categories = useSelector(categoryModel.categoriesSelector.categories);
+  const categories = useSelector(categoryModel.selectors.categories);
   const rowItems = useWindowWidth();
 
   return (

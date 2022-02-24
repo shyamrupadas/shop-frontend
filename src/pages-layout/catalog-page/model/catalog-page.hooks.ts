@@ -3,7 +3,7 @@ import { useAppDispatch, useAppSelector } from 'store';
 import { CategoryId } from 'shared/types';
 import { catalogModel } from 'entities/catalog';
 import { useWindowWidth } from 'shared/hooks';
-import { refreshCatalog } from '../../../entities/catalog/model';
+import { refreshCatalog } from 'entities/catalog/model';
 
 export const useUpdateCatalogAfterReset = (categoryId: CategoryId) => {
   const dispatch = useAppDispatch();
