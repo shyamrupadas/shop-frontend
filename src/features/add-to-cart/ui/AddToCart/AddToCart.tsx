@@ -38,7 +38,10 @@ export const AddToCart = ({ product }: AddToCartProps) => {
   }, []);
 
   return (
-    <ButtonGroup aria-label="outlined primary button group" onClick={handleEventPropagation}>
+    <ButtonGroup
+      aria-label="outlined primary button group"
+      onClick={handleEventPropagation}
+    >
       <IconButton
         color="primary"
         onClick={_handleDecrementClick}
