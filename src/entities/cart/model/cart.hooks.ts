@@ -96,17 +96,12 @@ export const useCartReset = () => {
 export const useCartNotification = (
   notificationRef: React.MutableRefObject<undefined>,
 ) => {
-  const dispatch = useAppDispatch();
   const notification = useAppSelector(cartNotificationSelector);
   const isOpen = Boolean(notification);
 
   const [anchorElement, setAnchorElement] = React.useState<HTMLElement | null>(
     null,
   );
-
-  const closeNotification = useCallback(() => {
-    dispatch(cartModel.actions.resetNotification());
-  }, [dispatch]);
 
   useEffect(
     () => setAnchorElement(notificationRef.current || null),
@@ -117,6 +112,5 @@ export const useCartNotification = (
     isOpen,
     anchorElement,
     notification,
-    closeNotification,
   };
 };
