@@ -3,6 +3,7 @@ import Head from 'next/head';
 import { Header } from 'widgets/header';
 import { Footer } from 'widgets/footer';
 import style from './MainLayout.module.css';
+import { ProductModal } from '../widgets/product-modal';
 
 const MainLayout = ({
   children,
@@ -21,6 +22,7 @@ const MainLayout = ({
       <Header />
       <main className={style.main}>{children}</main>
       <Footer />
+      <ProductModal />
     </div>
   );
 };

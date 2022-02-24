@@ -1,1 +1,1 @@
-export { useWindowWidth } from './useWindowWidth';
+export * from './useWindowWidth';

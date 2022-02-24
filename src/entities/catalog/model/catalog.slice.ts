@@ -14,6 +14,7 @@ type CatalogState = {
     rows: { [rowIndex: number]: Product[] };
     status: 'idle' | 'pending' | 'success' | 'error';
   };
+  openedProduct: null | Product;
 };
 
 const initialState: CatalogState = {
@@ -27,6 +28,7 @@ const initialState: CatalogState = {
     rows: {},
     status: 'idle',
   },
+  openedProduct: null,
 };
 
 const catalogSlice = createSlice({
@@ -48,6 +50,12 @@ const catalogSlice = createSlice({
         rows: {},
         status: 'idle',
       };
+    },
+    openProduct: (state, action: PayloadAction<Product>) => {
+      state.openedProduct = action.payload;
+    },
+    closeProduct: (state) => {
+      state.openedProduct = null;
     },
   },
   extraReducers: (builder) => {
@@ -92,5 +100,6 @@ const catalogSlice = createSlice({
   },
 });
 
-export const { setCategoryId, refreshCatalog } = catalogSlice.actions;
+export const { setCategoryId, refreshCatalog, openProduct, closeProduct } =
+  catalogSlice.actions;
 export const catalogReducer = catalogSlice.reducer;

@@ -13,14 +13,16 @@ import React from 'react';
 type CartProductsItemProps = {
   product: Product;
   children?: React.ReactNode;
+  onClick: () => void;
 };
 
 export const CartProductsItem = ({
   product,
   children,
+  onClick,
 }: CartProductsItemProps) => {
   return (
-    <Card sx={{ display: 'flex' }}>
+    <Card sx={{ display: 'flex' }} onClick={onClick}>
       <CardMedia
         component="img"
         sx={{ width: 150 }}

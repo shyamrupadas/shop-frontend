@@ -3,6 +3,7 @@ import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { Product } from 'shared/types';
 import { useAddToCart } from '../../model';
+import { useCallback } from 'react';
 
 type AddToCartProps = {
   product: Product;
@@ -16,11 +17,27 @@ export const AddToCart = ({ product }: AddToCartProps) => {
     isMaxCount,
   } = useAddToCart(product);
 
+  const _handleIncrementClick = useCallback(
+    (event) => {
+      event.stopPropagation();
+      handleIncrementClick();
+    },
+    [handleIncrementClick],
+  );
+
+  const _handleDecrementClick = useCallback(
+    (event) => {
+      event.stopPropagation();
+      handleDecrementClick();
+    },
+    [handleDecrementClick],
+  );
+
   return (
     <ButtonGroup aria-label="outlined primary button group">
       <IconButton
         color="primary"
-        onClick={handleDecrementClick}
+        onClick={_handleDecrementClick}
         disabled={Boolean(productCount <= 0)}
       >
         <RemoveCircleOutlineIcon />
@@ -45,7 +62,7 @@ export const AddToCart = ({ product }: AddToCartProps) => {
 
       <IconButton
         color="primary"
-        onClick={handleIncrementClick}
+        onClick={_handleIncrementClick}
         disabled={isMaxCount}
       >
         <AddCircleOutlineIcon />
