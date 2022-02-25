@@ -42,14 +42,16 @@ export const NavMenu = () => {
         onClose={handleClose}
         TransitionComponent={Fade}
       >
-        {categories.map((category) => {
-          const pathname = `/catalog/${category._id}`;
-          return (
-            <MenuItem key={category._id} onClick={handleClose}>
-              <Link href={{ pathname }}>{category.name}</Link>
-            </MenuItem>
-          );
-        })}
+        <div onMouseLeave={handleClose}>
+          {categories.map((category) => {
+            const pathname = `/catalog/${category._id}`;
+            return (
+              <MenuItem key={category._id} onClick={handleClose}>
+                <Link href={{ pathname }}>{category.name}</Link>
+              </MenuItem>
+            );
+          })}
+        </div>
       </Menu>
     </div>
   );
