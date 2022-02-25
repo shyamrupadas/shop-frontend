@@ -26,6 +26,7 @@ Javascript, Typescript, React.js, Next.js, Redux Toolkit, React Virtualized, Axi
 
 Node.js, Nest.js, MongoDB. <br>
 https://github.com/Comingsoon000/shop-server
+https://sbermarket-internship.herokuapp.com
 
 
 ###Запуск проекта в режиме разработки:
