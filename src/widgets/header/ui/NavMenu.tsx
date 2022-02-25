@@ -2,7 +2,7 @@ import { Button, Menu, MenuItem, Typography } from '@mui/material';
 import Fade from '@mui/material/Fade';
 import Link from 'next/link';
 import { categoryModel } from 'entities/category';
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useSelector } from 'react-redux';
 
 export const NavMenu = () => {
@@ -10,13 +10,13 @@ export const NavMenu = () => {
   const open = Boolean(anchorEl);
   const categories = useSelector(categoryModel.selectors.categories);
 
-  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+  const handleClick = useCallback((event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
-  };
+  }, []);
 
-  const handleClose = () => {
+  const handleClose = useCallback(() => {
     setAnchorEl(null);
-  };
+  }, []);
 
   return (
     <div>
