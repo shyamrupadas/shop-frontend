@@ -9,23 +9,16 @@ export const useUpdateCatalogAfterReset = (categoryId: CategoryId) => {
   const dispatch = useAppDispatch();
   const rowItemsNumber = useWindowWidth();
   const catalog = useAppSelector(catalogModel.selectors.catalog);
-  const { columnItemsNumber, status } = catalog;
+  const { columnItemsNumber } = catalog;
 
   const isRowsChanges =
     catalog.limit / rowItemsNumber !== catalog.columnItemsNumber;
 
   useEffect(() => {
-    if (isRowsChanges) {
+    if (isRowsChanges && catalog.categoryId) {
+      console.log(catalog.categoryId);
+      console.log('RowsChanges');
       dispatch(refreshCatalog());
-    }
-  }, [catalog.categoryId, categoryId, dispatch, isRowsChanges]);
-
-  useEffect(() => {
-    if (!categoryId) {
-      return;
-    }
-
-    if (status === 'idle') {
       dispatch(
         catalogModel.thunks.loadProductsWithPagination({
           categoryId,
@@ -34,7 +27,14 @@ export const useUpdateCatalogAfterReset = (categoryId: CategoryId) => {
         }),
       );
     }
-  }, [status, categoryId, dispatch, rowItemsNumber, columnItemsNumber]);
+  }, [
+    catalog.categoryId,
+    categoryId,
+    columnItemsNumber,
+    dispatch,
+    isRowsChanges,
+    rowItemsNumber,
+  ]);
 };
 
 export const useInfinityProductsLoader = (categoryId: CategoryId) => {
