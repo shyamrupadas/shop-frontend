@@ -40,7 +40,7 @@ const catalogSlice = createSlice({
     },
     refreshCatalog: (state) => {
       state.catalogInfo = {
-        categoryId: null,
+        categoryId: state.catalogInfo.categoryId,
         length: 0,
         page: 0,
         limit: 0,
