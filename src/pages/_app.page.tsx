@@ -9,9 +9,14 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
   const store = useStore(pageProps?.preloadedState);
 
   useEffect(() => {
-    store.dispatch(
-      catalogModel.setCatalogInfo(pageProps?.preloadedState.catalog),
-    );
+    if (
+      store.getState().catalog.catalogInfo.categoryId !==
+      pageProps.preloadedState.catalog.catalogInfo.categoryId
+    ) {
+      store.dispatch(
+        catalogModel.setCatalogInfo(pageProps?.preloadedState.catalog),
+      );
+    }
   }, [store, pageProps]);
 
   return (
