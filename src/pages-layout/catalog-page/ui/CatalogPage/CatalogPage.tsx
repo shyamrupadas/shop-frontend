@@ -7,8 +7,9 @@ import { useAppSelector } from 'store';
 import { categoryModel } from 'entities/category';
 import {
   useInfinityProductsLoader,
-  useUpdateCatalogAfterReset,
+  useRefreshCatalog,
 } from '../../model/catalog-page.hooks';
+import { useWindowWidth } from 'shared/hooks';
 
 const ITEM_HEIGHT = 410;
 const ITEM_WIDTH = 200;
@@ -21,10 +22,12 @@ const CatalogPage = () => {
   const category = useAppSelector((state) =>
     categoryModel.selectors.categoryById(state, categoryId),
   );
+  const rowItemsNumber = useWindowWidth();
 
-  useUpdateCatalogAfterReset(categoryId);
+  useRefreshCatalog(rowItemsNumber);
+
   const { rows, hasNextPage, isLoading, fetchNextPage, rowsCount, maxRows } =
-    useInfinityProductsLoader(categoryId);
+    useInfinityProductsLoader(categoryId, rowItemsNumber);
 
   const categoryName = category?.name ?? '';
 
