@@ -3,17 +3,19 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { loadProductsWithPagination } from './catalog.thunks';
 import { convertPageToRows } from './convertPageToRows';
 
+export type CatalogInfo = {
+  categoryId: string | null;
+  length: number;
+  page: number;
+  limit: number;
+  lastPage: number;
+  columnItemsNumber: number;
+  rows: { [rowIndex: number]: Product[] };
+  status: 'idle' | 'pending' | 'success' | 'error';
+};
+
 type CatalogState = {
-  catalogInfo: {
-    categoryId: string | null;
-    length: number;
-    page: number;
-    limit: number;
-    lastPage: number;
-    columnItemsNumber: number;
-    rows: { [rowIndex: number]: Product[] };
-    status: 'idle' | 'pending' | 'success' | 'error';
-  };
+  catalogInfo: CatalogInfo;
   openedProduct: null | Product;
 };
 
@@ -38,16 +40,34 @@ const catalogSlice = createSlice({
     setCategoryId: (state, action: PayloadAction<string>) => {
       state.catalogInfo.categoryId = action.payload;
     },
-    refreshCatalog: (state) => {
+    refreshCatalog: (state, action: PayloadAction<{ limit: number }>) => {
+      const rows = state.catalogInfo.rows;
+
+      const dataFromState = Object.values(rows)
+        .flat()
+        .slice(0, action.payload.limit);
+
+      const lastPage =
+        dataFromState.length > action.payload.limit
+          ? state.catalogInfo.lastPage + 1
+          : state.catalogInfo.lastPage;
+
+      const newRows = convertPageToRows({
+        page: 1,
+        columnItemsNumber: state.catalogInfo.columnItemsNumber,
+        limit: action.payload.limit,
+        data: dataFromState,
+      });
+
       state.catalogInfo = {
         categoryId: state.catalogInfo.categoryId,
-        length: 0,
-        page: 0,
-        limit: 0,
-        lastPage: 0,
-        columnItemsNumber: 4,
-        rows: {},
-        status: 'idle',
+        length: state.catalogInfo.length,
+        page: 1,
+        limit: action.payload.limit,
+        lastPage: lastPage,
+        columnItemsNumber: state.catalogInfo.columnItemsNumber,
+        rows: newRows,
+        status: state.catalogInfo.status,
       };
     },
     setCatalogInfo: (
