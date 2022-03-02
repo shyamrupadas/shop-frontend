@@ -25,7 +25,13 @@ export const NavMenu = () => {
         aria-controls={open ? 'fade-menu' : undefined}
         aria-haspopup="true"
         aria-expanded={open ? 'true' : undefined}
-        sx={{ color: '#FFFFFF', marginLeft: '20%' }}
+        sx={{
+          color: '#FFFFFF',
+          marginLeft: '20%',
+          textTransform: 'capitalize',
+          fontSize: '16px',
+          fontWeight: '400',
+        }}
         onClick={handleClick}
       >
         <Typography variant="h6" component="span">
