@@ -2,12 +2,10 @@ import { useCallback, useEffect, useMemo } from 'react';
 import { useAppDispatch, useAppSelector } from 'store';
 import { CategoryId } from 'shared/types';
 import { catalogModel } from 'entities/catalog';
-import { useWindowWidth } from 'shared/hooks';
 import { refreshCatalog } from 'entities/catalog/model';
 
-export const useUpdateCatalogAfterReset = (categoryId: CategoryId) => {
+export const useRefreshCatalog = (rowItemsNumber: number) => {
   const dispatch = useAppDispatch();
-  const rowItemsNumber = useWindowWidth();
   const catalog = useAppSelector(catalogModel.selectors.catalog);
   const { columnItemsNumber } = catalog;
 
@@ -16,20 +14,10 @@ export const useUpdateCatalogAfterReset = (categoryId: CategoryId) => {
 
   useEffect(() => {
     if (isRowsChanges && catalog.categoryId) {
-      console.log(catalog.categoryId);
-      console.log('RowsChanges');
-      dispatch(refreshCatalog());
-      dispatch(
-        catalogModel.thunks.loadProductsWithPagination({
-          categoryId,
-          page: 1,
-          limit: rowItemsNumber * columnItemsNumber,
-        }),
-      );
+      dispatch(refreshCatalog({ limit: rowItemsNumber * columnItemsNumber }));
     }
   }, [
     catalog.categoryId,
-    categoryId,
     columnItemsNumber,
     dispatch,
     isRowsChanges,
@@ -37,9 +25,11 @@ export const useUpdateCatalogAfterReset = (categoryId: CategoryId) => {
   ]);
 };
 
-export const useInfinityProductsLoader = (categoryId: CategoryId) => {
+export const useInfinityProductsLoader = (
+  categoryId: CategoryId,
+  rowItemsNumber: number,
+) => {
   const dispatch = useAppDispatch();
-  const rowItemsNumber = useWindowWidth();
   const catalog = useAppSelector(catalogModel.selectors.catalog);
   const { columnItemsNumber, status, rows, page: currentPage } = catalog;
   const isLoading = status === 'pending';
@@ -53,10 +43,6 @@ export const useInfinityProductsLoader = (categoryId: CategoryId) => {
   const hasNextPage = currentPage < catalog.lastPage;
 
   const fetchNextPage = useCallback(() => {
-    if (!categoryId) {
-      return;
-    }
-
     dispatch(
       catalogModel.thunks.loadProductsWithPagination({
         categoryId,
@@ -64,7 +50,7 @@ export const useInfinityProductsLoader = (categoryId: CategoryId) => {
         limit: rowItemsNumber * columnItemsNumber,
       }),
     );
-  }, [categoryId, columnItemsNumber, currentPage, dispatch, rowItemsNumber]);
+  }, [categoryId, columnItemsNumber, currentPage, dispatch, , rowItemsNumber]);
 
   return {
     rows,
